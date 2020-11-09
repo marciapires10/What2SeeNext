@@ -4323,6 +4323,8 @@ input[type=button].btn-block {
   background-clip: border-box;
   border: 1px solid rgba(0, 0, 0, 0.125);
   border-radius: 0.25rem;
+  width: 200px;
+  height: 400px;
 }
 .card > hr {
   margin-right: 0;
@@ -5910,18 +5912,18 @@ a.close.disabled {
 }
 
 .carousel-control-prev {
-  left: 0;
+  right: 45rem;
 }
 
 .carousel-control-next {
-  right: 0;
+  left: 45rem;
 }
 
 .carousel-control-prev-icon,
 .carousel-control-next-icon {
   display: inline-block;
-  width: 20px;
-  height: 20px;
+  width: 40px;
+  height: 40px;
   background: no-repeat 50%/100% 100%;
 }
 
