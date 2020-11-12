@@ -61,3 +61,16 @@
   });
 
 })(jQuery); // End of use strict
+
+function ShowGenre(){
+  document.getElementById("dropgenre").classList.toggle("show");
+}
+
+window.onclick = function(e){
+  if(!e.target.matches('.dropbtn')) {
+    var dropgenre = document.getElementById("genredrop");
+    if(dropgenre.classList.contains('show')){
+      dropgenre.classList.remove('show');
+    }
+  }
+}
