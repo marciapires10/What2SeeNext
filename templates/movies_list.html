@@ -26,6 +26,7 @@
                 <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
+                        <input type="text" placeholder="Search for movies, series, ...">
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="movies_list.html">Movies</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#series">Series</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="#actors">Actors</a></li>
@@ -39,26 +40,36 @@
             <div id="container-all" class="container h-100">
                 <div class="row h-100 align-items-center justify-content-center text-center bg-dark" id="index-container">
                     <div class="col-lg-10">
-                        <h4 style="text-align: left; color: white;">Genre:</h4>
                         <div class="dropdown" onclick="ShowGenre()">
-                            <button class="dropbtn">All genres   <i class="fa fa-caret-down"> </i></button>
+                            <button class="dropbtn">Genre   <i class="fa fa-caret-down"> </i></button>
                             <div class="dropdown-content" id="dropgenre">
-                                <a href="#">Action</a>
-                                <a href="#">Adventure</a>
-                                <a href="#">Animation</a>
-                                <a href="#">Comedy</a>
-                                <a href="#">Crime</a>
-                                <a href="#">Drama</a>
-                                <a href="#">Fantasy</a>
-                                <a href="#">Historical</a>
-                                <a href="#">Horror</a>
-                                <a href="#">Mystery</a>
-                                <a href="#">Political</a>
-                                <a href="#">Romance</a>
-                                <a href="#">Science Fiction</a>
-                                <a href="#">Thriller</a>
+                                <table>
+                                    <tr>
+                                        <td><a href="#">Action</a>
+                                            <a href="#">Adventure</a>
+                                            <a href="#">Animation</a>
+                                            <a href="#">Comedy</a>
+                                        </td>
+                                        <td>
+                                            <a href="#">Crime</a>
+                                            <a href="#">Drama</a>
+                                            <a href="#">Fantasy</a>
+                                            <a href="#">Historical</a>
+                                        </td>
+                                        <td>
+                                            <a href="#">Horror</a>
+                                            <a href="#">Mystery</a>
+                                            <a href="#">Political</a>
+                                            <a href="#">Romance</a>
+                                        </td>
+                                        <td>
+                                            <a href="#">Science Fiction</a>
+                                            <a href="#">Thriller</a>
+                                            <a href="#">All</a>
+                                        </td>
+                                    </tr>
+                                </table>
                             </div>
-                            
                         </div>
                     </div>
                     <div class="col-lg-10 align-self-baseline">

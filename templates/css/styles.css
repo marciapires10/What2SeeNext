@@ -1076,11 +1076,6 @@ pre code {
     max-width: 16.6666666667%;
   }
 
-  #movies_all .col-md-2{
-    flex: 0 0 25%;
-    max-width: 20%;
-  }
-
   .col-md-3 {
     flex: 0 0 25%;
     max-width: 25%;
@@ -4338,7 +4333,12 @@ input[type=button].btn-block {
 
 #full-card-all{
   height: 300px;
-  width: 200px;
+  width: 180px;
+  margin-right: 10px;
+}
+
+#movies_all{
+  justify-content: space-around;
 }
 
 .card > hr {
@@ -10206,27 +10206,32 @@ header.masthead h1 {
 }
 
 .dropdown .dropbtn {
-  font-size: 16px;
-  border: none;
+  font-size: 30px;
   outline: none;
   color: white;
-  padding: 14px 16px;
+  padding: 8px 14px;
   background-color: inherit;
-  font-family: inherit;
+  font-family: Merriweather Sans;
   margin: 0;
+  border: thin solid white;
+  border-radius: 3px;
 }
 
 .dropdown:hover .dropbtn{
-  background-color: #007bff;
+  background-color: #303336;
 }
 
 .dropdown-content{
   display: none;
   position: absolute;
-  background-color: #007bff;
+  background-color: #1b1d1f;
+  opacity: 97%;
   min-width: 160px;
   box-shadow: 0px 8xp 16px 0px rgba(0, 0, 0, 0.2);
   z-index: 16;
+  font-family: Merriweather Sans;
+  border: thin solid white;
+  border-radius: 3px;
 }
 
 .dropdown-content a{
@@ -10236,10 +10241,11 @@ header.masthead h1 {
   text-decoration: none;
   display: block;
   text-align: left;
+  border-radius: 3px;
 }
 
 .dropdown-content a:hover{
-  background-color: white;
+  background-color: #303336;
 }
 
 .show {
@@ -10288,4 +10294,12 @@ header.masthead h1 {
     padding: 14px;
     border: 1px solid #ccc;
   }
+}
+
+#options{
+  display: inline-block;
+  width: 80px;
+  height: 30px;
+  background-color: white;
+  border: 1px solid grey;
 }

@@ -68,7 +68,7 @@ function ShowGenre(){
 
 window.onclick = function(e){
   if(!e.target.matches('.dropbtn')) {
-    var dropgenre = document.getElementById("genredrop");
+    var dropgenre = document.getElementById("dropgenre");
     if(dropgenre.classList.contains('show')){
       dropgenre.classList.remove('show');
     }
