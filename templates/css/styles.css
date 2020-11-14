@@ -10278,10 +10278,10 @@ header.masthead h1 {
   padding: 6px;
   border: none;
   margin-top: 0;
-  margin-right: 16px;
   font-size: 17px;
-  border-radius: 3px;
-  width: 700px;
+  border-top-left-radius: 3px;
+  border-bottom-left-radius: 3px;
+  width: 680px;
 }
 
 @media screen and (max-width: 600px) {
@@ -10302,4 +10302,24 @@ header.masthead h1 {
   height: 30px;
   background-color: white;
   border: 1px solid grey;
+}
+
+#mainNav #search-container{
+  float: right;
+}
+
+#mainNav #search-container button{
+  float: right;
+  padding: 6px;
+  margin-top: 0;
+  margin-right: 16px;
+  cursor: pointer;
+  border: none;
+  font-size: 17px;
+  border-top-right-radius: 3px;
+  border-bottom-right-radius: 3px;
+}
+
+#mainNav #search-container button:hover{
+  background: #7d858d;
 }
