@@ -10252,6 +10252,28 @@ header.masthead h1 {
   display: block;
 }
 
+#movies-search td{
+  padding-top: 15px;
+  padding-bottom: 15px;
+  padding-left: 50px;
+}
+
+#poster-search-img{
+  width: 200px;
+  height: 300px;
+}
+
+#info-search{
+  text-align: left;
+  padding-right: 60px;
+  width: 70%;
+}
+
+#movie-search-container{
+  margin-top: 0;
+  height: 600px;
+}
+
 #movie-info-container{
   margin-top: 0;
   height: 600px;
@@ -10322,4 +10344,13 @@ header.masthead h1 {
 
 #mainNav #search-container button:hover{
   background: #7d858d;
+}
+
+#watch-reviews{
+  position: absolute;
+  left: 46%;
+  bottom: 7%;
+  padding-left: 70px;
+  padding-right: 70px;
+  padding-bottom: 0px;
 }
