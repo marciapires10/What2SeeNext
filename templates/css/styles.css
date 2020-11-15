@@ -164,7 +164,7 @@ a {
   background-color: transparent;
 }
 a:hover {
-  color: #d6370c;
+  color: #325694;
   text-decoration: underline;
 }
 
@@ -1717,15 +1717,15 @@ pre code {
 .table-primary td,
 .table-primary thead th,
 .table-primary tbody + tbody {
-  border-color: #f9ad99;
+  border-color: #212529;
 }
 
 .table-hover .table-primary:hover {
-  background-color: #fbc0b0;
+  background-color: #212529;
 }
 .table-hover .table-primary:hover > td,
 .table-hover .table-primary:hover > th {
-  background-color: #fbc0b0;
+  background-color: #212529;
 }
 
 .table-secondary,
@@ -1998,7 +1998,7 @@ pre code {
 .form-control:focus {
   color: #495057;
   background-color: #fff;
-  border-color: #fbc2b3;
+  border-color: #325694;
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(244, 98, 58, 0.25);
 }
@@ -3496,12 +3496,12 @@ input[type=button].btn-block {
   box-shadow: 0 0 0 0.2rem rgba(244, 98, 58, 0.25);
 }
 .custom-control-input:focus:not(:checked) ~ .custom-control-label::before {
-  border-color: #fbc2b3;
+  border-color: #325694;
 }
 .custom-control-input:not(:disabled):active ~ .custom-control-label::before {
   color: #fff;
-  background-color: #fde9e3;
-  border-color: #fde9e3;
+  background-color: #325694;
+  border-color: #325694;
 }
 .custom-control-input[disabled] ~ .custom-control-label, .custom-control-input:disabled ~ .custom-control-label {
   color: #6c757d;
@@ -3675,7 +3675,7 @@ input[type=button].btn-block {
   opacity: 0;
 }
 .custom-file-input:focus ~ .custom-file-label {
-  border-color: #fbc2b3;
+  border-color: #325694;
   box-shadow: 0 0 0 0.2rem rgba(244, 98, 58, 0.25);
 }
 .custom-file-input[disabled] ~ .custom-file-label, .custom-file-input:disabled ~ .custom-file-label {
@@ -4463,6 +4463,7 @@ tr.space > td{
   transition: opacity 0.35s ease;
   position: absolute;
   top: 225px;
+  margin-left: 100px;
 }
 
 #more-movie-all{
@@ -5972,11 +5973,7 @@ a.close.disabled {
 
 .carousel-control-prev:hover, .carousel-control-prev:focus,
 .carousel-control-next:hover,
-.carousel-control-next:focus,
-#control-prev-news:hover,
-#control-prev-news:focus,
-#control-next-news:hover,
-#control-next-news:focus {
+.carousel-control-next:focus{
   color: #fff;
   text-decoration: none;
   outline: 0;
@@ -5984,23 +5981,15 @@ a.close.disabled {
 }
 
 .carousel-control-prev {
-  margin-top: 40px;
-  right: inherit;
-}
-
-#control-prev-news{
-  left: -60%;
+  margin-top: 200px;
+  left: -25%;
   right: inherit;
 }
 
 .carousel-control-next {
-  margin-top: 40px;
+  margin-top: 200px;
   left: inherit;
-}
-
-#control-next-news{
-  left: inherit;
-  right: -60%;
+  right: -25%;
 }
 
 .carousel-control-prev-icon,
@@ -10168,12 +10157,13 @@ header.masthead h1 {
 }
 
 @media (min-width: 992px) {
-  header.masthead {
+  header.masthead{
     height: 100vh;
     min-height: 40rem;
     padding-top: 7rem;
     padding-bottom: 6rem;
   }
+
   header.masthead p {
     font-size: 1.15rem;
   }
@@ -10207,7 +10197,7 @@ header.masthead h1 {
   text-align: center;
   opacity: 0;
   color: #fff;
-  background: rgba(244, 98, 58, 0.9);
+  background: #1b1d1f;
   transition: opacity 0.25s ease;
   text-align: center;
 }
