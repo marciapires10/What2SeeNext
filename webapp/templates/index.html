@@ -1,4 +1,4 @@
- stat<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
     <head>
         <meta charset="utf-8" />
@@ -6,8 +6,11 @@
         <meta name="description" content="" />
         <meta name="author" content="" />
         <title>MoviesEDC</title>
+
+        {% load static %}
+
         <!-- Favicon-->
-        <link rel="icon" type="image/x-icon" href="assets/img/favicon.ico" />
+        <link rel="icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}" />
         <!-- Font Awesome icons (free version)-->
         <script src="https://use.fontawesome.com/releases/v5.15.1/js/all.js" crossorigin="anonymous"></script>
         <!-- Google fonts-->
@@ -16,7 +19,7 @@
         <!-- Third party plugin CSS-->
         <link href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css" rel="stylesheet" />
         <!-- Core theme CSS (includes Bootstrap)-->
-        <link href="css/styles.css" rel="stylesheet" />
+        <link href="{% static 'css/styles.css' %}" rel="stylesheet" />
     </head>
     <body id="page-top">
         <!-- Navigation-->
@@ -66,7 +69,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/hp.jpg">
+                                                    <img class="card-img-top" src="../static/assets/img/hp.jpg">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Harry Potter</h4>
                                                         <p class="card-text">IMDb Rating: 7.6</p>
@@ -77,7 +80,7 @@
                                             </div>
                                             <div class="col-md-4 clearfix d-none d-md-block">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/ts.jpg" alt="Card image top">
+                                                    <img class="card-img-top" src="../static/assets/img/ts.jpg" alt="Card image top">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Toy Story 2</h4>
                                                         <p class="card-text">IMDb Rating: 7.9</p>
@@ -88,7 +91,7 @@
                                             </div>
                                             <div class="col-md-4 clearfix d-none d-md-block">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/hp.jpg" alt="Card image top">
+                                                    <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Harry Potter</h4>
                                                         <p class="card-text">IMDb Rating: 5.4</p>
@@ -103,7 +106,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/hp.jpg" alt="Card image top">
+                                                    <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Harry Potter</h4>
                                                         <p class="card-text">IMDb Rating: 5.4</p>
@@ -114,7 +117,7 @@
                                             </div>
                                             <div class="col-md-4 clearfix d-none d-md-block">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/hp.jpg" alt="Card image top">
+                                                    <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Harry Potter</h4>
                                                         <p class="card-text">IMDb Rating: 5.4</p>
@@ -125,7 +128,7 @@
                                             </div>
                                             <div class="col-md-4 clearfix d-none d-md-block">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/hp.jpg" alt="Card image top">
+                                                    <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Harry Potter</h4>
                                                         <p class="card-text">IMDb Rating: 5.4</p>
@@ -175,7 +178,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/hp.jpg">
+                                                    <img class="card-img-top" src="../static/assets/img/hp.jpg">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Harry Potter</h4>
                                                         <p class="card-text">IMDb Rating: 7.6</p>
@@ -186,7 +189,7 @@
                                             </div>
                                             <div class="col-md-4 clearfix d-none d-md-block">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/ts.jpg" alt="Card image top">
+                                                    <img class="card-img-top" src="../static/assets/img/ts.jpg" alt="Card image top">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Toy Story 2</h4>
                                                         <p class="card-text">IMDb Rating: 7.9</p>
@@ -197,7 +200,7 @@
                                             </div>
                                             <div class="col-md-4 clearfix d-none d-md-block">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/hp.jpg" alt="Card image top">
+                                                    <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Harry Potter</h4>
                                                         <p class="card-text">IMDb Rating: 5.4</p>
@@ -212,7 +215,7 @@
                                         <div class="row">
                                             <div class="col-md-4">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/hp.jpg" alt="Card image top">
+                                                    <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Harry Potter</h4>
                                                         <p class="card-text">IMDb Rating: 5.4</p>
@@ -223,7 +226,7 @@
                                             </div>
                                             <div class="col-md-4 clearfix d-none d-md-block">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/hp.jpg" alt="Card image top">
+                                                    <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Harry Potter</h4>
                                                         <p class="card-text">IMDb Rating: 5.4</p>
@@ -234,7 +237,7 @@
                                             </div>
                                             <div class="col-md-4 clearfix d-none d-md-block">
                                                 <div class="card mb-2" id="full-card">
-                                                    <img class="card-img-top" src="assets/img/hp.jpg" alt="Card image top">
+                                                    <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
                                                     <div class="card-body">
                                                         <h4 class="card-title">Harry Potter</h4>
                                                         <p class="card-text">IMDb Rating: 5.4</p>
@@ -261,7 +264,7 @@
                 <div class="row">
                     <div class="col-lg-3 col-md-6 text-center">
                         <div class="mt-5">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="" />
+                            <img class="img-fluid" src="../static/assets/img/portfolio/thumbnails/1.jpg" alt="" />
                             <p></p>
                             <h3 class="h4 mb-2">Sturdy Themes</h3>
                             <p class="text-muted mb-0">Our themes are updated regularly to keep them bug free!</p>
@@ -269,7 +272,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 text-center">
                         <div class="mt-5">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="" />
+                            <img class="img-fluid" src="../static/assets/img/portfolio/thumbnails/1.jpg" alt="" />
                             <p></p>
                             <h3 class="h4 mb-2">Up to Date</h3>
                             <p class="text-muted mb-0">All dependencies are kept current to keep things fresh.</p>
@@ -277,7 +280,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 text-center">
                         <div class="mt-5">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="" />
+                            <img class="img-fluid" src="../static/assets/img/portfolio/thumbnails/1.jpg" alt="" />
                             <p></p>
                             <h3 class="h4 mb-2">Ready to Publish</h3>
                             <p class="text-muted mb-0">You can use this design as is, or you can make changes!</p>
@@ -285,7 +288,7 @@
                     </div>
                     <div class="col-lg-3 col-md-6 text-center">
                         <div class="mt-5">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="" />
+                            <img class="img-fluid" src="../static/assets/img/portfolio/thumbnails/1.jpg" alt="" />
                             <p></p>
                             <h3 class="h4 mb-2">Made with Love</h3>
                             <p class="text-muted mb-0">Is it really open source if it's not made with love?</p>
@@ -299,8 +302,8 @@
             <div class="container-fluid p-0">
                 <div class="row no-gutters">
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/1.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/1.jpg" alt="" />
+                        <a class="portfolio-box" href="../static/assets/img/portfolio/fullsize/1.jpg">
+                            <img class="img-fluid" src="../static/assets/img/portfolio/thumbnails/1.jpg" alt="" />
                             <div class="portfolio-box-caption">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -308,8 +311,8 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/2.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/2.jpg" alt="" />
+                        <a class="portfolio-box" href="../static/assets/img/portfolio/fullsize/2.jpg">
+                            <img class="img-fluid" src="../static/assets/img/portfolio/thumbnails/2.jpg" alt="" />
                             <div class="portfolio-box-caption">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -317,8 +320,8 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/3.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/3.jpg" alt="" />
+                        <a class="portfolio-box" href="../static/assets/img/portfolio/fullsize/3.jpg">
+                            <img class="img-fluid" src="../static/assets/img/portfolio/thumbnails/3.jpg" alt="" />
                             <div class="portfolio-box-caption">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -326,8 +329,8 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/4.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/4.jpg" alt="" />
+                        <a class="portfolio-box" href="../static/assets/img/portfolio/fullsize/4.jpg">
+                            <img class="img-fluid" src="../static/assets/img/portfolio/thumbnails/4.jpg" alt="" />
                             <div class="portfolio-box-caption">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -335,8 +338,8 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/5.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/5.jpg" alt="" />
+                        <a class="portfolio-box" href="../static/assets/img/portfolio/fullsize/5.jpg">
+                            <img class="img-fluid" src="../static/assets/img/portfolio/thumbnails/5.jpg" alt="" />
                             <div class="portfolio-box-caption">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -344,8 +347,8 @@
                         </a>
                     </div>
                     <div class="col-lg-4 col-sm-6">
-                        <a class="portfolio-box" href="assets/img/portfolio/fullsize/6.jpg">
-                            <img class="img-fluid" src="assets/img/portfolio/thumbnails/6.jpg" alt="" />
+                        <a class="portfolio-box" href="../static/assets/img/portfolio/fullsize/6.jpg">
+                            <img class="img-fluid" src="../static/assets/img/portfolio/thumbnails/6.jpg" alt="" />
                             <div class="portfolio-box-caption p-3">
                                 <div class="project-category text-white-50">Category</div>
                                 <div class="project-name">Project Name</div>
@@ -400,6 +403,6 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.4.1/jquery.easing.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
         <!-- Core theme JS-->
-        <script src="js/scripts.js"></script>
+        <script src="{% static 'scripts/scripts.js' %}"></script>
     </body>
 </html>
