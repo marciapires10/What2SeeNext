@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="root" type="rootType"/>
+  <xs:complexType name="itemType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="author"/>
+      <xs:element type="xs:string" name="content"/>
+      <xs:element type="xs:string" name="id"/>
+      <xs:element type="xs:string" name="url"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="resultsType" mixed="true">
+    <xs:sequence>
+      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="reviewType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="id"/>
+      <xs:element type="xs:integer" name="page"/>
+      <xs:element type="resultsType" name="results"/>
+      <xs:element type="xs:integer" name="total_pages"/>
+      <xs:element type="xs:integer" name="total_results"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rootType">
+    <xs:sequence>
+      <xs:element type="reviewType" name="review" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
