@@ -77,13 +77,17 @@
       <xs:element type="xs:string" name="job" minOccurs="0"/>
     </xs:all>
   </xs:complexType>
-  <xs:complexType name="castType" mixed="true">
-    <xs:choice>
-      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+  <xs:complexType name="topCastType" mixed="true">
+    <xs:all>
       <xs:element type="xs:string" name="id" minOccurs="0"/>
       <xs:element type="castType" name="cast" minOccurs="0"/>
       <xs:element type="crewType" name="crew" minOccurs="0"/>
-    </xs:choice>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="castType">
+    <xs:sequence>
+      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
   </xs:complexType>
   <xs:complexType name="crewType">
     <xs:sequence>
@@ -92,7 +96,7 @@
   </xs:complexType>
   <xs:complexType name="rootType">
     <xs:sequence>
-      <xs:element type="castType" name="cast" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="topCastType" name="cast" maxOccurs="unbounded" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>
