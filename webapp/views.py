@@ -4,6 +4,9 @@ import sys
 import os
 from django.http import HttpResponse
 import requests
+import lxml.etree as ET
+
+from EDC_Project.settings import BASE_DIR
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
 
@@ -25,10 +28,25 @@ def index(request):
 
 
 def movies(request):
+    xml = 'movies.xml'
+    xslt = 'movies-list.xsl'
+    fxml = os.path.join(BASE_DIR, 'webapp/files/' + xml)
+    fxslt = os.path.join(BASE_DIR, 'webapp/files/' + xslt)
 
-    return render(request, 'movies_list.html')
+    tree = ET.parse(fxml)
+    xslt_parse = ET.parse(fxslt)
+    transform = ET.XSLT(xslt_parse)
+
+    tparams = {
+        'html': transform,
+    }
+
+    return render(request, 'movies_list.html', tparams)
 
 
 def series(request):
 
     return render(request, 'series_list.html')
+
+
+
