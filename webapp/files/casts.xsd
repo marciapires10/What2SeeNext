@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="root" type="rootType"/>
+  <xs:complexType name="itemType">
+    <xs:all>
+      <xs:element name="adult">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="False"/>
+            <xs:enumeration value="True"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="gender">
+        <xs:simpleType>
+          <xs:restriction base="xs:byte">
+            <xs:enumeration value="3"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="id"/>
+      <xs:element name="known_for_department">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Acting"/>
+            <xs:enumeration value="Directing"/>
+            <xs:enumeration value="Camera"/>
+            <xs:enumeration value="Editing"/>
+            <xs:enumeration value="Costume &amp; Make-Up"/>
+            <xs:enumeration value="Sound"/>
+            <xs:enumeration value="Art"/>
+            <xs:enumeration value="Production"/>
+            <xs:enumeration value="Writing"/>
+            <xs:enumeration value="Crew"/>
+            <xs:enumeration value="Lighting"/>
+            <xs:enumeration value="Visual Effects"/>
+            <xs:enumeration value="Creator"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="original_name"/>
+      <xs:element name="popularity">
+        <xs:simpleType>
+          <xs:restriction base="xs:float">
+              <xs:minInclusive value="0.0"/>
+              <xs:maxInclusive value="100.0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="profile_path"/>
+      <xs:element type="xs:string" name="name"/>
+      <xs:element type="xs:integer" name="cast_id" minOccurs="0"/>
+      <xs:element type="xs:string" name="character" minOccurs="0"/>
+      <xs:element type="xs:string" name="credit_id"/>
+      <xs:element type="xs:integer" name="order" minOccurs="0"/>
+      <xs:element name="department" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Writing"/>
+            <xs:enumeration value="Directing"/>
+            <xs:enumeration value="Camera"/>
+            <xs:enumeration value="Editing"/>
+            <xs:enumeration value="Costume &amp; Make-Up"/>
+            <xs:enumeration value="Production"/>
+            <xs:enumeration value="Sound"/>
+            <xs:enumeration value="Art"/>
+            <xs:enumeration value="Crew"/>
+            <xs:enumeration value="Lighting"/>
+            <xs:enumeration value="Visual Effects"/>
+            <xs:enumeration value="Actors"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="job" minOccurs="0"/>
+    </xs:all>
+  </xs:complexType>
+  <xs:complexType name="castType" mixed="true">
+    <xs:choice>
+      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+      <xs:element type="xs:string" name="id" minOccurs="0"/>
+      <xs:element type="castType" name="cast" minOccurs="0"/>
+      <xs:element type="crewType" name="crew" minOccurs="0"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="crewType">
+    <xs:sequence>
+      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rootType">
+    <xs:sequence>
+      <xs:element type="castType" name="cast" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

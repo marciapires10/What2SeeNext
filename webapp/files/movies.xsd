@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="root" type="rootType"/>
+  <xs:complexType name="itemType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="id" minOccurs="0"/>
+      <xs:element type="xs:string" name="logo_path" minOccurs="0"/>
+      <xs:element type="xs:string" name="iso_3166_1" minOccurs="0"/>
+      <xs:element type="xs:string" name="iso_639_1" minOccurs="0"/>
+      <xs:element type="xs:string" name="name"/>
+      <xs:element name="origin_country" minOccurs="0">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:enumeration value="FI"/>
+          <xs:enumeration value="US"/>
+          <xs:enumeration value="JP"/>
+          <xs:enumeration value="DK"/>
+          <xs:enumeration value="PT"/>
+          <xs:enumeration value="SE"/>
+          <xs:enumeration value="FR"/>
+          <xs:enumeration value=""/>
+          <xs:enumeration value="DE"/>
+          <xs:enumeration value="NL"/>
+          <xs:enumeration value="IS"/>
+          <xs:enumeration value="GB"/>
+          <xs:enumeration value="CA"/>
+          <xs:enumeration value="ES"/>
+          <xs:enumeration value="PS"/>
+          <xs:enumeration value="IL"/>
+          <xs:enumeration value="CH"/>
+          <xs:enumeration value="AT"/>
+          <xs:enumeration value="HK"/>
+          <xs:enumeration value="UY"/>
+          <xs:enumeration value="PY"/>
+          <xs:enumeration value="MT"/>
+          <xs:enumeration value="MA"/>
+          <xs:enumeration value="PL"/>
+          <xs:enumeration value="KR"/>
+          <xs:enumeration value="NZ"/>
+          <xs:enumeration value="RU"/>
+          <xs:enumeration value="IT"/>
+          <xs:enumeration value="AU"/>
+          <xs:enumeration value="NO"/>
+        </xs:restriction>
+      </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="genreItemType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="id" minOccurs="0"/>
+      <xs:element name="name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Drama" />
+            <xs:enumeration value="Comedy" />
+            <xs:enumeration value="Animation" />
+            <xs:enumeration value="Action &amp; Adventure" />
+            <xs:enumeration value="Action"/>
+            <xs:enumeration value="Adventure" />
+            <xs:enumeration value="Crime" />
+            <xs:enumeration value="Fantasy" />
+            <xs:enumeration value="Historical"/>
+            <xs:enumeration value="Horror" />
+            <xs:enumeration value="Mystery" />
+            <xs:enumeration value="Political" />
+            <xs:enumeration value="Romance" />
+            <xs:enumeration value="Sci-Fi &amp; Fantasy" />
+            <xs:enumeration value="Sci-Fi"/>
+            <xs:enumeration value="Fantasy" />
+            <xs:enumeration value="Thriller" />
+            <xs:enumeration value="Documentary" />
+            <xs:enumeration value="Family" />
+            <xs:enumeration value="News" />
+            <xs:enumeration value="Reality" />
+            <xs:enumeration value="Soap" />
+            <xs:enumeration value="Talk" />
+            <xs:enumeration value="Kids" />
+            <xs:enumeration value="War &amp; Politics" />
+            <xs:enumeration value="Music" />
+            <xs:enumeration value="Science Fiction" />
+            <xs:enumeration value="War" />
+            <xs:enumeration value="History" />
+            <xs:enumeration value="Western" />
+            <xs:enumeration value="TV Movie" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="genresType">
+    <xs:sequence>
+      <xs:element type="genreItemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="production_companiesType" mixed="true">
+    <xs:sequence>
+      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="production_countriesType">
+    <xs:sequence>
+      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="spoken_languagesType">
+    <xs:sequence>
+      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="movieType">
+    <xs:sequence>
+      <xs:element name="adult">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="False"/>
+            <xs:enumeration value="True"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="backdrop_path"/>
+      <xs:element name="belongs_to_collection">
+        <xs:complexType mixed="true">
+          <xs:sequence>
+            <xs:element type="xs:string" name="id" minOccurs="0"/>
+            <xs:element type="xs:string" name="name" minOccurs="0"/>
+            <xs:element type="xs:string" name="poster_path" minOccurs="0"/>
+            <xs:element type="xs:string" name="backdrop_path" minOccurs="0"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element type="xs:integer" name="budget"/>
+      <xs:element type="genresType" name="genres"/>
+      <xs:element type="xs:string" name="homepage"/>
+      <xs:element type="xs:integer" name="id"/>
+      <xs:element type="xs:string" name="imdb_id"/>
+      <xs:element type="xs:string" name="original_language"/>
+      <xs:element type="xs:string" name="original_title"/>
+      <xs:element type="xs:string" name="overview"/>
+      <xs:element name="popularity">
+        <xs:simpleType>
+          <xs:restriction base="xs:float">
+            <xs:minInclusive value="0.0"/>
+            <xs:maxInclusive value="100.0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="poster_path"/>
+      <xs:element type="production_companiesType" name="production_companies"/>
+      <xs:element type="production_countriesType" name="production_countries"/>
+      <xs:element type="xs:date" name="release_date" minOccurs="0"/>
+      <xs:element type="xs:integer" name="revenue"/>
+      <xs:element type="xs:integer" name="runtime"/>
+      <xs:element type="spoken_languagesType" name="spoken_languages"/>
+      <xs:element name="status">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value=""/>
+            <xs:enumeration value="Released"/>
+            <xs:enumeration value="Soon"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="tagline"/>
+      <xs:element type="xs:string" name="title"/>
+      <xs:element name="video">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="False"/>
+            <xs:enumeration value="True"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="vote_average">
+        <xs:simpleType>
+          <xs:restriction base="xs:float">
+            <xs:minInclusive value="0.0"/>
+            <xs:maxInclusive value="10.0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:integer" name="vote_count"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="belongs_to_collectionType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="id" minOccurs="0"/>
+      <xs:element type="xs:string" name="name" minOccurs="0"/>
+      <xs:element type="xs:string" name="poster_path" minOccurs="0"/>
+      <xs:element type="xs:string" name="backdrop_path" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rootType">
+    <xs:sequence>
+      <xs:element type="movieType" name="movie" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema attributeFormDefault="unqualified" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:element name="root" type="rootType"/>
+  <xs:complexType name="itemType">
+    <xs:choice maxOccurs="unbounded" minOccurs="0">
+      <xs:element type="xs:integer" name="id"/>
+      <xs:element type="xs:string" name="credit_id"/>
+      <xs:element type="xs:string" name="name"/>
+      <xs:element name="gender">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="1"/>
+            <xs:enumeration value="2"/>
+            <xs:enumeration value="0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="profile_path"/>
+      <xs:element type="xs:string" name="logo_path"/>
+      <xs:element type="xs:string" name="origin_country"/>
+      <xs:element name="air_date">
+        <xs:simpleType>
+          <xs:union memberTypes="xs:date">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value=""/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:union>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:integer" name="episode_count"/>
+      <xs:element type="xs:string" name="overview"/>
+      <xs:element type="xs:string" name="poster_path"/>
+      <xs:element type="xs:integer" name="season_number"/>
+    </xs:choice>
+  </xs:complexType>
+  <xs:complexType name="genreItemType">
+    <xs:sequence>
+      <xs:element type="xs:integer" name="id" />
+      <xs:element name="name">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Drama" />
+            <xs:enumeration value="Comedy" />
+            <xs:enumeration value="Animation" />
+            <xs:enumeration value="Action &amp; Adventure" />
+            <xs:enumeration value="Action"/>
+            <xs:enumeration value="Adventure" />
+            <xs:enumeration value="Crime" />
+            <xs:enumeration value="Fantasy" />
+            <xs:enumeration value="Historical"/>
+            <xs:enumeration value="Horror" />
+            <xs:enumeration value="Mystery" />
+            <xs:enumeration value="Political" />
+            <xs:enumeration value="Romance" />
+            <xs:enumeration value="Sci-Fi &amp; Fantasy" />
+            <xs:enumeration value="Sci-Fi"/>
+            <xs:enumeration value="Fantasy" />
+            <xs:enumeration value="Thriller" />
+            <xs:enumeration value="Documentary" />
+            <xs:enumeration value="Family" />
+            <xs:enumeration value="News" />
+            <xs:enumeration value="Reality" />
+            <xs:enumeration value="Soap" />
+            <xs:enumeration value="Talk" />
+            <xs:enumeration value="Kids" />
+            <xs:enumeration value="War &amp; Politics" />
+            <xs:enumeration value="Music" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="created_byType" mixed="true">
+    <xs:sequence>
+      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="episode_run_timeType" mixed="true">
+    <xs:sequence>
+      <xs:element name="item" maxOccurs="unbounded" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="3000"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="genresType" mixed="true">
+    <xs:sequence>
+      <xs:element type="genreItemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="languagesType" mixed="true">
+    <xs:sequence>
+      <xs:element name="item" maxOccurs="unbounded" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="en"/>
+            <xs:enumeration value="ja"/>
+            <xs:enumeration value="zh"/>
+            <xs:enumeration value="cn"/>
+            <xs:enumeration value="fr"/>
+            <xs:enumeration value="ko"/>
+            <xs:enumeration value="cs"/>
+            <xs:enumeration value="tl"/>
+            <xs:enumeration value="es"/>
+            <xs:enumeration value="de"/>
+            <xs:enumeration value="hi"/>
+            <xs:enumeration value="ga"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="last_episode_to_airType" mixed="true">
+    <xs:sequence>
+      <xs:element type="xs:date" name="air_date" minOccurs="0"/>
+      <xs:element type="xs:integer" name="episode_number" minOccurs="0"/>
+      <xs:element type="xs:integer" name="id" minOccurs="0"/>
+      <xs:element type="xs:string" name="name" minOccurs="0"/>
+      <xs:element type="xs:string" name="overview" minOccurs="0"/>
+      <xs:element type="xs:string" name="production_code" minOccurs="0" />
+      <xs:element type="xs:integer" name="season_number" minOccurs="0"/>
+      <xs:element type="xs:integer" name="show_id" minOccurs="0"/>
+      <xs:element type="xs:string" name="still_path" minOccurs="0"/>
+      <xs:element name="vote_average" minOccurs="0">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:minInclusive value="0.0"/>
+            <xs:maxInclusive value="10.0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:integer" name="vote_count" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="networksType" mixed="true">
+    <xs:sequence>
+      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="origin_countryType" mixed="true">
+    <xs:sequence>
+      <xs:element type="xs:string" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="production_companiesType" mixed="true">
+    <xs:sequence>
+      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="seasonsType" mixed="true">
+    <xs:sequence>
+      <xs:element type="itemType" name="item" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="serieType">
+    <xs:sequence>
+      <xs:element type="xs:string" name="backdrop_path"/>
+      <xs:element type="created_byType" name="created_by"/>
+      <xs:element type="episode_run_timeType" name="episode_run_time"/>
+      <xs:element name="first_air_date">
+        <xs:simpleType>
+          <xs:union memberTypes="xs:date">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value=""/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:union>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="genresType" name="genres"/>
+      <xs:element type="xs:string" name="homepage"/>
+      <xs:element type="xs:integer" name="id"/>
+      <xs:element name="in_production">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="False"/>
+            <xs:enumeration value="True"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="languagesType" name="languages"/>
+      <xs:element name="last_air_date">
+        <xs:simpleType>
+          <xs:union memberTypes="xs:date">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value=""/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:union>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="last_episode_to_airType" name="last_episode_to_air"/>
+      <xs:element type="xs:string" name="name"/>
+      <xs:element type="xs:string" name="next_episode_to_air"/>
+      <xs:element type="networksType" name="networks"/>
+      <xs:element type="xs:integer" name="number_of_episodes"/>
+      <xs:element type="xs:integer" name="number_of_seasons"/>
+      <xs:element type="origin_countryType" name="origin_country"/>
+      <xs:element name="original_language">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="en"/>
+            <xs:enumeration value="ja"/>
+            <xs:enumeration value="cn"/>
+            <xs:enumeration value="hi"/>
+            <xs:enumeration value="zh"/>
+            <xs:enumeration value="ko"/>
+            <xs:enumeration value="cs"/>
+            <xs:enumeration value="tl"/>
+            <xs:enumeration value="ga"/>
+            <xs:enumeration value="de"/>
+            <xs:enumeration value="es"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="original_name"/>
+      <xs:element type="xs:string" name="overview"/>
+      <xs:element type="xs:float" name="popularity"/>
+      <xs:element type="xs:string" name="poster_path"/>
+      <xs:element type="production_companiesType" name="production_companies"/>
+      <xs:element type="seasonsType" name="seasons"/>
+      <xs:element name="status">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Canceled"/>
+            <xs:enumeration value="Ended"/>
+            <xs:enumeration value="Returning Series"/>
+            <xs:enumeration value="Ongoing"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:string" name="tagline"/>
+      <xs:element name="type">
+        <xs:simpleType>
+          <xs:restriction base="xs:string">
+            <xs:enumeration value="Scripted"/>
+            <xs:enumeration value="Miniseries"/>
+            <xs:enumeration value="News"/>
+            <xs:enumeration value="Reality"/>
+            <xs:enumeration value="Video"/>
+            <xs:enumeration value="Documentary"/>
+            <xs:enumeration value="Talk Show"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element name="vote_average">
+        <xs:simpleType>
+          <xs:restriction base="xs:float">
+            <xs:minInclusive value="0.0"/>
+            <xs:maxInclusive value="10.0"/>
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
+      <xs:element type="xs:integer" name="vote_count"/>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="rootType">
+    <xs:sequence>
+      <xs:element type="serieType" name="serie" maxOccurs="unbounded" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
