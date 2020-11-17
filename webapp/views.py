@@ -5,11 +5,25 @@ import os
 from django.http import HttpResponse
 import requests
 import lxml.etree as ET
-
-from EDC_Project.settings import BASE_DIR
+from BaseXClient import BaseXClient
+from Project.settings import BASE_DIR
+import os
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
+session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+GET_TOP_QUERY = os.path.join(BASE_DIR, 'queries/bestRated.xq')
+def get_top_rated_movies():
+    # create query instance
+    input = "for $i in 1 to 10 return <xml>Text { $i }</xml>"
+    query = session.query(input)
 
+    # loop through all results
+    for typecode, item in query.iter():
+        print("typecode=%d" % typecode)
+        print("item=%s" % item)
+
+    # close query object
+    query.close()
 
 def get_rss():
     response = requests.get(MOVIES_NEWS)
@@ -40,6 +54,7 @@ def get_rss():
 
 
 def index(request):
+    get_top_rated_movies()
     t_params = get_rss()
     return render(request, 'index.html', t_params)
 
