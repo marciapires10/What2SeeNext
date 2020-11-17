@@ -12,35 +12,29 @@ MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
 
 
 def get_rss():
-    print("OI")
     response = requests.get(MOVIES_NEWS)
     tree = etree.XML(response.text)
     movies = []
-    titles = []
-    resume = []
-    urls = []
     items = tree.xpath(".//item")
     for item in items:
         if item.find("title") is not None and item.find("description") is not None:
 
-            titles.append(item.find("title").text)
             description = item.find("description").text.replace("<p>","")
             description = description.replace("</p>","")
             description = description.replace("<em>","")
             description = description.replace("</em>", "")
-            resume.append(description)
 
             movie = []
             movie.append(item.find("title").text)
             movie.append(description)
 
             if item.find("enclosure") is not None:
-                urls.append(str(item.find("enclosure").get('url')))
-                print(str(item.find("enclosure").get('url')))
                 movie.append(str(item.find("enclosure").get('url')))
+            if item.find("guid") is not None:
+                movie.append(item.find("guid").text)
             movies.append(movie)
 
-    t_params = {'movies': movies,}
+    t_params = {'movies': movies}
 
     return t_params
 
