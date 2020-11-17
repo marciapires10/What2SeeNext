@@ -25,5 +25,4 @@ urlpatterns = [
     path('movies/', views.movies, name='movies'),
     path('series/', views.series, name='series'),
     path('rss/', views.get_rss, name="get_rss"),
-    path('details/', views.info_detail, name='details'),
 ]

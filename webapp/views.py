@@ -6,11 +6,11 @@ from django.http import HttpResponse
 import requests
 import lxml.etree as ET
 from BaseXClient import BaseXClient
-from Project.settings import BASE_DIR
+from EDC_Project.settings import BASE_DIR
 import os
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
-session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+#session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
 GET_TOP_QUERY = os.path.join(BASE_DIR, 'queries/bestRated.xq')
 def get_top_rated_movies():
     # create query instance
@@ -54,7 +54,7 @@ def get_rss():
 
 
 def index(request):
-    get_top_rated_movies()
+    #get_top_rated_movies()
     t_params = get_rss()
     return render(request, 'index.html', t_params)
 
@@ -77,8 +77,20 @@ def movies(request):
 
 
 def series(request):
+    pxml = 'series.xml'
+    pxslt = 'series-list.xsl'
+    fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
+    fxslt = os.path.join(BASE_DIR, 'webapp/files/' + pxslt)
 
-    return render(request, 'series_list.html')
+    tree = ET.parse(fxml)
+    xslt = ET.parse(fxslt)
+    transform = ET.XSLT(xslt)
+    html = transform(tree)
+    tparams = {
+        'html_series': html,
+    }
+
+    return render(request, 'series_list.html', tparams)
 
 
 
