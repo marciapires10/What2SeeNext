@@ -80,5 +80,18 @@ def series(request):
 
     return render(request, 'series_list.html')
 
+def info_detail(request):
+    """id = request.GET.get('id', '')
 
+    fname = 'movies.xml'
+    pname = os.path.join(BASE_DIR, 'app/files/' + fname)
+    xml = ET.parse(pname)
+    info = dict()
+    query = "//movie[id='{}']".format(id)
+    movies = xml.path(query)
+
+    for m in movies:
+        info[id] = []    """
+
+    return render(request, 'info.html')
 
