@@ -11,7 +11,7 @@
                                 <div class="card mb-2" id="full-card-all">
                                     <img>
                                         <xsl:attribute name="src">
-                                            http://image.tmdb.org/t/p/w200<xsl:value-of select="backdrop_path"/>
+                                            http://image.tmdb.org/t/p/w200<xsl:value-of select="poster_path"/>
                                         </xsl:attribute>
                                         <xsl:attribute name="alt">
                                             <xsl:value-of select="name"/>
@@ -35,7 +35,7 @@
                                     <div class="card mb-2" id="full-card-all">
                                         <img>
                                             <xsl:attribute name="src">
-                                                http://image.tmdb.org/t/p/w200<xsl:value-of select="backdrop_path"/>
+                                                http://image.tmdb.org/t/p/w200<xsl:value-of select="poster_path"/>
                                             </xsl:attribute>
                                             <xsl:attribute name="alt">
                                                 <xsl:value-of select="name"/>
