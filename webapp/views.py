@@ -11,7 +11,7 @@ from EDC_Project.settings import BASE_DIR
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
 
 
-def get_rss(request):
+def get_rss():
     print("OI")
     response = requests.get(MOVIES_NEWS)
     tree = etree.XML(response.text)
@@ -42,12 +42,12 @@ def get_rss(request):
 
     t_params = {'movies': movies,}
 
-    return render(request, 'index.html', t_params)
+    return t_params
 
 
 def index(request):
-
-    return render(request, 'index.html')
+    t_params = get_rss()
+    return render(request, 'index.html', t_params)
 
 
 def movies(request):
