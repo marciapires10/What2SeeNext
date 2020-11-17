@@ -51,17 +51,17 @@ def index(request):
 
 
 def movies(request):
-    xml = 'movies.xml'
-    xslt = 'movies-list.xsl'
-    fxml = os.path.join(BASE_DIR, 'webapp/files/' + xml)
-    fxslt = os.path.join(BASE_DIR, 'webapp/files/' + xslt)
+    pxml = 'movies.xml'
+    pxslt = 'movies-list.xsl'
+    fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
+    fxslt = os.path.join(BASE_DIR, 'webapp/files/' + pxslt)
 
     tree = ET.parse(fxml)
-    xslt_parse = ET.parse(fxslt)
-    transform = ET.XSLT(xslt_parse)
-
+    xslt = ET.parse(fxslt)
+    transform = ET.XSLT(xslt)
+    html = transform(tree)
     tparams = {
-        'html': transform,
+        'html': html,
     }
 
     return render(request, 'movies_list.html', tparams)
