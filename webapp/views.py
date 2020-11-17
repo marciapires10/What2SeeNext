@@ -69,12 +69,28 @@ def movies(request):
     xslt = ET.parse(fxslt)
     transform = ET.XSLT(xslt)
     html = transform(tree)
+
+    genres = get_movie_genres()
+
     tparams = {
         'html': html,
+        'movie_genres': genres,
     }
 
     return render(request, 'movies_list.html', tparams)
 
+def get_movie_genres():
+    fname = 'movies.xml'
+    pname = os.path.join(BASE_DIR, 'webapp/files/' + fname)
+    xml = ET.parse(pname)
+    info = []
+    query = '//movie/genres/item/name'
+    genres = xml.xpath(query)
+
+    for g in genres:
+        info.append(g.text)
+
+    return info
 
 def series(request):
     pxml = 'series.xml'
