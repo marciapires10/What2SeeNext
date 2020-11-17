@@ -10,20 +10,35 @@ from EDC_Project.settings import BASE_DIR
 import os
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
-#session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
-GET_TOP_QUERY = os.path.join(BASE_DIR, 'queries/bestRated.xq')
+MOVIES_SITE = "http://image.tmdb.org/t/p/w200"
+session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
+QUERY_TOP_MOVIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:top-movies()"
+NO_IMAGE = os.path.join(BASE_DIR, "webapp/files/NoImage.jpg")
+
+
 def get_top_rated_movies():
     # create query instance
-    input = "for $i in 1 to 10 return <xml>Text { $i }</xml>"
-    query = session.query(input)
+    movies_xml = os.path.join(BASE_DIR, "webapp/files/movies.xml")
+    query = session.query(QUERY_TOP_MOVIES).execute()
+    print(query)
+    movies_list = []
+    tree = etree.XML(query)
+    movies = tree.xpath(".//movie")
 
-    # loop through all results
-    for typecode, item in query.iter():
-        print("typecode=%d" % typecode)
-        print("item=%s" % item)
+    for movie in movies:
+        movie_temp = []
+        movie_temp.append(movie.find("original_title").text)
+        movie_temp.append(movie.find("vote_average").text)
+        if movie.find("poster_path").text is not None:
+            poster_url = MOVIES_SITE + movie.find("poster_path").text
+        else:
+            poster_url = NO_IMAGE
+        movie_temp.append(poster_url)
 
-    # close query object
-    query.close()
+        movies_list.append(movie_temp)
+
+    return movies_list
+
 
 def get_rss():
     response = requests.get(MOVIES_NEWS)
@@ -48,14 +63,15 @@ def get_rss():
                 movie.append(item.find("guid").text)
             movies.append(movie)
 
-    t_params = {'movies': movies}
-
-    return t_params
+    return movies
 
 
 def index(request):
-    #get_top_rated_movies()
-    t_params = get_rss()
+    top_movies = get_top_rated_movies()
+    news = get_rss()
+    t_params = {'news': news,
+                'top_movies': top_movies}
+
     return render(request, 'index.html', t_params)
 
 
