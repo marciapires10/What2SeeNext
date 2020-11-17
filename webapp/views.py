@@ -108,5 +108,25 @@ def series(request):
 
     return render(request, 'series_list.html', tparams)
 
+def detail_info(request):
 
+    m_review = movie_review()
 
+    tparams = {
+        'html_review': m_review
+    }
+
+    return render(request, 'info.html', tparams)
+
+def movie_review():
+    pxml = 'reviews.xml'
+    pxslt = 'movie-reviews.xsl'
+    fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
+    fxslt = os.path.join(BASE_DIR, 'webapp/files/' + pxslt)
+
+    tree = ET.parse(fxml)
+    xslt = ET.parse(fxslt)
+    transform = ET.XSLT(xslt)
+    html = transform(tree)
+
+    return html
