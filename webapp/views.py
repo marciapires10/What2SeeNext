@@ -2,7 +2,7 @@ from django.shortcuts import render
 from lxml import etree
 import sys
 import os
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpRequest
 import requests
 import lxml.etree as ET
 from BaseXClient import BaseXClient
@@ -178,3 +178,15 @@ def movie_review():
     html = transform(tree)
 
     return html
+
+def get_search_results(request):
+    assert isinstance(request, HttpRequest)
+    if 'a' in request.POST:
+        title = request.POST['a']
+
+        if title:
+            return render(request, 'search_result.html')
+        else:
+            return render(request, 'movies_list.html')
+    else:
+        return render(request, 'movies_list.html')
