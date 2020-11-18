@@ -102,8 +102,8 @@ def index(request):
 def get_movie_genres():
     # create query instance
     result = session.query(QUERY_MOVIE_GENRES).execute()
-
-    mgenres = result.replace('<genres>', "").replace('<genre>', "").replace('</genre>', "").replace('</genres>', "")
+    tree = etree.XML(result)
+    mgenres = [genre.text for genre in tree.xpath(".//genre")]
 
     return mgenres
 
@@ -119,7 +119,6 @@ def movies(request):
     html = transform(tree)
 
     mgenres = get_movie_genres()
-    print(mgenres)
 
     tparams = {
         'html': html,
