@@ -31,7 +31,7 @@
                         <div class="carousel-content" role="listbox">
                             <div class="carousel-item active">
                                 <div class="row">
-                                    {% for title, rating, poster in top_movies %}
+                                    {% for title, rating, poster, id in top_movies %}
                                         {% if forloop.counter0 <= 2 %}
                                     <div class="col-md-4">
                                         <div class="card mb-2" id="full-card">
@@ -50,7 +50,7 @@
                             </div>
                             <div class="carousel-item">
                                 <div class="row">
-                                    {% for title, rating, poster in top_movies %}
+                                    {% for title, rating, poster, id in top_movies %}
                                         {% if forloop.counter0 > 2 %}
                                             {% if forloop.counter0 <= 5 %}
                                     <div class="col-md-4">
@@ -71,7 +71,7 @@
                             </div>
                                 <div class="carousel-item">
                                     <div class="row">
-                                        {% for title, rating, poster in top_movies %}
+                                        {% for title, rating, poster, id in top_movies %}
                                             {% if forloop.counter0 > 5 %}
                                                 {% if forloop.counter0 <= 8 %}
                                         <div class="col-md-4">
@@ -92,7 +92,7 @@
                                 </div>
                                 <div class="carousel-item">
                                     <div class="row">
-                                        {% for title, rating, poster in top_movies %}
+                                        {% for title, rating, poster, id in top_movies %}
                                             {% if forloop.counter0 > 8 %}
                                                 {% if forloop.counter0 <= 10 %}
                                         <div class="col-md-4">
@@ -148,7 +148,7 @@
                         <div class="carousel-content" role="listbox">
                             <div class="carousel-item active">
                                 <div class="row">
-                                    {% for title, rating, poster in top_series %}
+                                    {% for title, rating, poster, id in top_series %}
                                         {% if forloop.counter0 <= 2 %}
                                     <div class="col-md-4">
                                         <div class="card mb-2" id="full-card">
@@ -167,7 +167,7 @@
                             </div>
                             <div class="carousel-item">
                                 <div class="row">
-                                    {% for title, rating, poster in top_series %}
+                                    {% for title, rating, poster, id in top_series %}
                                         {% if forloop.counter0 > 2 %}
                                             {% if forloop.counter0 <= 5 %}
                                     <div class="col-md-4">
@@ -188,7 +188,7 @@
                             </div>
                                 <div class="carousel-item">
                                     <div class="row">
-                                        {% for title, rating, poster in top_series %}
+                                        {% for title, rating, poster, id in top_series %}
                                             {% if forloop.counter0 > 5 %}
                                                 {% if forloop.counter0 <= 8 %}
                                         <div class="col-md-4">
@@ -209,7 +209,7 @@
                                 </div>
                                 <div class="carousel-item">
                                     <div class="row">
-                                        {% for title, rating, poster in top_series %}
+                                        {% for title, rating, poster, id in top_series %}
                                             {% if forloop.counter0 > 8 %}
                                                 {% if forloop.counter0 <= 10 %}
                                         <div class="col-md-4">

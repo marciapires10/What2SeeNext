@@ -31,14 +31,20 @@ def get_top_rated_movies():
 
     for movie in movies:
         movie_temp = []
-        movie_temp.append(movie.find("original_title").text)
-        movie_temp.append(movie.find("vote_average").text)
         if movie.find("poster_path").text is not None:
             poster_url = IMAGES_SITE + movie.find("poster_path").text
         else:
             poster_url = NO_IMAGE
-        movie_temp.append(poster_url)
+        if movie.find("id").text is not None:
+            movie_id = movie.find("id").text
+        else:
+            movie_id = "Undefined"
 
+        movie_temp.append(movie.find("original_title").text)
+        movie_temp.append(movie.find("vote_average").text)
+        movie_temp.append(poster_url)
+        movie_temp.append(movie_id)
+        print(movie_id)
         movies_list.append(movie_temp)
 
     return movies_list
@@ -53,13 +59,20 @@ def get_top_rated_series():
     series = tree.xpath(".//serie")
     for serie in series:
         serie_temp = []
-        serie_temp.append(serie.find("original_name").text)
-        serie_temp.append(serie.find("vote_average").text)
+
         if serie.find("poster_path").text is not None:
             poster_url = IMAGES_SITE + serie.find("poster_path").text
         else:
             poster_url = NO_IMAGE
+        if serie.find("id").text is not None:
+            serie_id = serie.find("id").text
+        else:
+            serie_id = "Undefined"
+
+        serie_temp.append(serie.find("original_name").text)
+        serie_temp.append(serie.find("vote_average").text)
         serie_temp.append(poster_url)
+        serie_temp.append(serie_id)
         series_list.append(serie_temp)
 
     return series_list
