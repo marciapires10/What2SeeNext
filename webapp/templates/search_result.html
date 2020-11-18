@@ -8,62 +8,98 @@
             <h2 style="color: white;">Results for '{{ str }}'</h2>
             <div class="container" id="movie-search-container">
                 <table id="movies-search">
+                    {% for title, rating, poster, duration, date, genre, overview in result_movies %}
                     <tr>
                         <td id="poster-search">
                             <div class="container">
-                                <img class="img-fluid" src="../static/assets/img/hp.jpg" alt="" id="poster-search-img"/>
+                                <img class="img-fluid" src={{ poster }} alt="" id="poster-search-img"/>
                             </div>
                         </td>
                         <td id="info-search">
                             <div class="container" style="color: white;">
-                                <h5><b>Harry Potter</b></h5>
+                                <h4><b>{{ title }}</b></h4>
                                 <p></p>
-                                <h5>An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world. </h5>
+                                <h6>{{ genre }} ({{ date }})</h6>
                                 <p></p>
-                                <h5>[Magic] [Family]</h5>
+                                <h6>Duration: {{ duration }} min</h6>
                                 <p></p>
-                                <h5>IMDb rating: 7.6</h5>
+                                <h7>{{ overview }} </h7>
+                                <p></p>
+                                <h7>IMDb rating: {{ rating }}</h7>
                                 <p></p>
                                 <button>See more</button>
                             </div>
                         </td>
                     </tr>
+                {% endfor %}
+                {% for title, rating, poster, date, genre, overview in result_series%}
                     <tr>
                         <td id="poster-search">
                             <div class="container">
-                                <img class="img-fluid" src="../static/assets/img/hp.jpg" alt="" id="poster-search-img"/>
+                                <img class="img-fluid" src={{ poster }} alt="" id="poster-search-img"/>
                             </div>
                         </td>
                         <td id="info-search">
                             <div class="container" style="color: white;">
-                                <h5><b>Harry Potter</b></h5>
+                                <h4><b>{{ title }}</b></h4>
                                 <p></p>
-                                <h5>An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world. </h5>
+                                <h6>{{ genre }} ({{ date }})</h6>
                                 <p></p>
-                                <h5>[Magic] [Family]</h5>
+                                <h7>{{ overview }} </h7>
                                 <p></p>
-                                <h5>IMDb rating: 7.6</h5>
+                                <h7>IMDb rating: {{ rating }}</h7>
+                                <p></p>
+                                <button>See more</button>
                             </div>
                         </td>
                     </tr>
+                {% endfor %}
+                {% for title, rating, poster, duration, date, genre, overview in result_cast_movies %}
                     <tr>
                         <td id="poster-search">
                             <div class="container">
-                                <img class="img-fluid" src="../static/assets/img/hp.jpg" alt="" id="poster-search-img"/>
+                                <img class="img-fluid" src={{ poster }} alt="" id="poster-search-img"/>
                             </div>
                         </td>
                         <td id="info-search">
                             <div class="container" style="color: white;">
-                                <h5><b>Harry Potter</b></h5>
+                                <h4><b>{{ title }}</b></h4>
                                 <p></p>
-                                <h5>An orphaned boy enrolls in a school of wizardry, where he learns the truth about himself, his family and the terrible evil that haunts the magical world. </h5>
+                                <h6>{{ genre }} ({{ date }})</h6>
                                 <p></p>
-                                <h5>[Magic] [Family]</h5>
+                                <h6>Duration: {{ duration }} min</h6>
                                 <p></p>
-                                <h5>IMDb rating: 7.6</h5>
+                                <h7>{{ overview }} </h7>
+                                <p></p>
+                                <h7>IMDb rating: {{ rating }}</h7>
+                                <p></p>
+                                <button>See more</button>
                             </div>
                         </td>
                     </tr>
+                {% endfor %}
+                {% for title, rating, poster, date, genre, overview in result_cast_series%}
+                    <tr>
+                        <td id="poster-search">
+                            <div class="container">
+                                <img class="img-fluid" src={{ poster }} alt="" id="poster-search-img"/>
+                            </div>
+                        </td>
+                        <td id="info-search">
+                            <div class="container" style="color: white;">
+                                <h4><b>{{ title }}</b></h4>
+                                <p></p>
+                                <h6>{{ genre }} ({{ date }})</h6>
+                                <p></p>
+                                <h7>{{ overview }} </h7>
+                                <p></p>
+                                <h7>IMDb rating: {{ rating }}</h7>
+                                <p></p>
+                                <button>See more</button>
+                            </div>
+                        </td>
+                    </tr>
+                {% endfor %}
                 </table>
             </div>
         </div>

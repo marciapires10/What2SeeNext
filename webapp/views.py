@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 import requests
 import lxml.etree as ET
 from BaseXClient import BaseXClient
-from EDC_Project.settings import BASE_DIR
+from Project.settings import BASE_DIR
 import os
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
@@ -208,15 +208,117 @@ def movie_review():
     return html
 
 def get_search_results(request, str):
+    if 'search' in request.POST:
+        str = request.POST.get('search', '')
+        print(str)
+        return HttpResponseRedirect('/search_results/' + str)
     # create query instance
-    query = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-search(<movies>'" + str + "'</movies>)"
-    result = session.query(query).execute()
-    tree = etree.XML(result)
-    print(tree)
+    # titulo, rating, poster, duracao, data, generos, resumo
+
+    query_m = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-search-movies('" + str + "')"
+    query_s = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-search-series('" + str + "')"
+    query_c = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-search-persons('" + str + "')"
+    result_m = session.query(query_m).execute()
+    result_s = session.query(query_s).execute()
+    result_c = session.query(query_c).execute()
+    tree_m = etree.XML(result_m)
+    tree_s = etree.XML(result_s)
+    tree_c = etree.XML(result_c)
+    movies = tree_m.xpath(".//movie")
+    movies_list = get_movies_search(movies)
+    series = tree_s.xpath(".//serie")
+    series_list = get_series_search(series)
+    cast_movies = tree_c.xpath(".//movie")
+    cast_series = tree_c.xpath(".//serie")
+    cast_movies_list = get_movies_search(cast_movies)
+    cast_series_list = get_series_search(cast_series)
+
 
     tparams = {
         'str': str,
-        'result': tree,
+        'result_movies': movies_list,
+        'result_series': series_list,
+        'result_cast_movies': cast_movies_list,
+        'result_cast_series': cast_series_list
     }
 
     return render(request, 'search_result.html', tparams)
+
+def get_series_search(series):
+    series_list = []
+
+    for serie in series:
+
+        serie_temp = []
+        if serie.find("poster_path").text is not None:
+            poster_url = IMAGES_SITE + serie.find("poster_path").text
+        else:
+            poster_url = NO_IMAGE
+        if serie.find("first_air_date").text is not None:
+            release_date = serie.find("first_air_date").text
+        else:
+            release_date = "Undefined"
+        if serie.find("genres").find("item") is not None and serie.find("genres").find("item").find(
+                "name") is not None:
+            genres = ""
+            for item in serie.find("genres"):
+                genres += "[" + item.find("name").text + "] "
+        else:
+            genres = "Undefined"
+        if serie.find("overview").text is not None:
+            overview = serie.find("overview").text
+        else:
+            overview = "Undefined"
+
+        serie_temp.append(serie.find("name").text)
+        serie_temp.append(serie.find("vote_average").text)
+        serie_temp.append(poster_url)
+        serie_temp.append(release_date)
+        serie_temp.append(genres)
+        serie_temp.append(overview)
+
+        series_list.append(serie_temp)
+
+    return series_list
+
+def get_movies_search(movies):
+    movies_list = []
+
+    for movie in movies:
+
+        movie_temp = []
+        if movie.find("poster_path").text is not None:
+            poster_url = IMAGES_SITE + movie.find("poster_path").text
+        else:
+            poster_url = NO_IMAGE
+        if movie.find("runtime").text is not None:
+            runtime = movie.find("runtime").text
+        else:
+            runtime = "Undefined"
+        if movie.find("release_date").text is not None:
+            release_date = movie.find("release_date").text
+        else:
+            release_date = "Undefined"
+        if movie.find("genres").find("item") is not None and movie.find("genres").find("item").find(
+                "name") is not None:
+            genres = ""
+            for item in movie.find("genres"):
+                genres += "[" + item.find("name").text + "] "
+        else:
+            genres = "Undefined"
+        if movie.find("overview").text is not None:
+            overview = movie.find("overview").text
+        else:
+            overview = "Undefined"
+
+        movie_temp.append(movie.find("original_title").text)
+        movie_temp.append(movie.find("vote_average").text)
+        movie_temp.append(poster_url)
+        movie_temp.append(runtime)
+        movie_temp.append(release_date)
+        movie_temp.append(genres)
+        movie_temp.append(overview)
+
+        movies_list.append(movie_temp)
+
+    return movies_list
