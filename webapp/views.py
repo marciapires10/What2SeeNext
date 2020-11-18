@@ -16,7 +16,7 @@ QUERY_TOP_MOVIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs
 QUERY_TOP_SERIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:top-series()"
 QUERY_MOVIE_GENRES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-mgenres()"
 QUERY_SERIE_GENRES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-sgenres()"
-NO_IMAGE = os.path.join(BASE_DIR, "webapp/files/NoImage.jpg")
+NO_IMAGE = "../static/assets/img/NoImage.jpg"
 
 
 def get_top_rated_movies():
