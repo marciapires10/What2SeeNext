@@ -10,9 +10,10 @@ from EDC_Project.settings import BASE_DIR
 import os
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
-MOVIES_SITE = "http://image.tmdb.org/t/p/w200"
+IMAGES_SITE = "http://image.tmdb.org/t/p/w200"
 session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
 QUERY_TOP_MOVIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:top-movies()"
+QUERY_TOP_SERIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:top-movies()"
 NO_IMAGE = os.path.join(BASE_DIR, "webapp/files/NoImage.jpg")
 
 
@@ -20,7 +21,6 @@ def get_top_rated_movies():
     # create query instance
     movies_xml = os.path.join(BASE_DIR, "webapp/files/movies.xml")
     query = session.query(QUERY_TOP_MOVIES).execute()
-    print(query)
     movies_list = []
     tree = etree.XML(query)
     movies = tree.xpath(".//movie")
@@ -30,7 +30,7 @@ def get_top_rated_movies():
         movie_temp.append(movie.find("original_title").text)
         movie_temp.append(movie.find("vote_average").text)
         if movie.find("poster_path").text is not None:
-            poster_url = MOVIES_SITE + movie.find("poster_path").text
+            poster_url = IMAGES_SITE + movie.find("poster_path").text
         else:
             poster_url = NO_IMAGE
         movie_temp.append(poster_url)
@@ -39,6 +39,27 @@ def get_top_rated_movies():
 
     return movies_list
 
+
+def get_top_rate_series():
+    # create query instance
+    query = session.query(QUERY_TOP_SERIES).execute()
+    series_list = []
+    tree = etree.XML(query)
+    series = tree.xpath(".//serie")
+
+    for serie in series:
+        serie_temp = []
+        serie_temp.append(serie.find("name").text)
+        serie_temp.append(serie.find("vote_average").text)
+        if serie.find("poster_path").text is not None:
+            poster_url = IMAGES_SITE + serie.find("poster_path").text
+        else:
+            poster_url = NO_IMAGE
+        serie_temp.append(poster_url)
+
+        series_list.append(serie_temp)
+
+    return series_list
 
 def get_rss():
     response = requests.get(MOVIES_NEWS)
@@ -68,9 +89,12 @@ def get_rss():
 
 def index(request):
     top_movies = get_top_rated_movies()
+    top_series = get_top_rate_series()
     news = get_rss()
     t_params = {'news': news,
-                'top_movies': top_movies}
+                'top_movies': top_movies,
+                'top_series': top_series
+                }
 
     return render(request, 'index.html', t_params)
 

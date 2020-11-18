@@ -2,7 +2,7 @@ module namespace funcs = "com.funcs.catalog";
 
 declare function funcs:top-movies() {
   <movies>{
-  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie[position()<11]
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
   order by $a/vote_average/text()/xs:double(.) descending
   return (
     <movie>{
@@ -13,12 +13,12 @@ declare function funcs:top-movies() {
       for $c in $a/genres/item
       return $c/name
     }</movie>
-  )
+  )[position() le 9]
   }</movies>
 };
 declare function funcs:top-series() {
   <series>{
-  for $a in doc("C:/Users/JacintoLuf/Desktop/ua/ano4/edc/projeto/EDC_Project/webapp/files/series.xml")//serie[position()<11]
+  for $a in doc(/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
   order by $a/vote_average/text()/xs:double(.) descending
   return (
     <serie>{
@@ -29,7 +29,7 @@ declare function funcs:top-series() {
       for $c in $a/genres/item
       return $c/name
     }</serie>
-  )
+  )[position() le 9]
   }</series>
 };
 declare function funcs:get-mgenres() {

@@ -40,7 +40,7 @@
                                                 <h4 class="card-title">{{ title }}</h4>
                                                 <p class="card-text">{{ rating }}</p>
                                             </div>
-                                            <div class="overlay" alt="Harry Potter" title="Harry Potter"></div>
+                                            <div class="overlay" alt={{ title }} title={{ title }}></div>
                                             <a class="btn btn-primary" id="more-movie" href="info.html">See more</a>
                                         </div>
                                     </div>
@@ -60,8 +60,8 @@
                                                 <h4 class="card-title">{{ title }}</h4>
                                                 <p class="card-text">{{ rating }}</p>
                                             </div>
-                                            <div class="overlay"></div>
-                                            <a class="btn btn-primary" id="more-movie">See more</a>
+                                            <div class="overlay" alt={{ title }} title={{ title }}></div>
+                                            <a class="btn btn-primary" id="more-movie" href="info.html">See more</a>
                                         </div>
                                     </div>
                                                 {% endif %}
@@ -81,8 +81,8 @@
                                                     <h4 class="card-title">{{ title }}</h4>
                                                     <p class="card-text">{{ rating }}</p>
                                                 </div>
-                                                <div class="overlay"></div>
-                                                <a class="btn btn-primary" id="more-movie">See more</a>
+                                                <div class="overlay" alt={{ title }} title={{ title }}></div>
+                                            <a class="btn btn-primary" id="more-movie" href="info.html">See more</a>
                                             </div>
                                         </div>
                                                     {% endif %}
@@ -102,8 +102,8 @@
                                                     <h4 class="card-title">{{ title }}</h4>
                                                     <p class="card-text">{{ rating }}</p>
                                                 </div>
-                                                <div class="overlay"></div>
-                                                <a class="btn btn-primary" id="more-movie">See more</a>
+                                                <div class="overlay" alt={{ title }} title={{ title }}></div>
+                                                <a class="btn btn-primary" id="more-movie" href="info.html">See more</a>
                                             </div>
                                         </div>
                                                     {% endif %}
@@ -118,7 +118,7 @@
         </div>
     </div>
 </header>
-<!-- What to see next-->
+<!-- Top series-->
 <section class="page-section bg-primary" id="top-series">
     <div id="container-all" class="container h-100">
         <div class="row h-100 align-items-center justify-content-center text-center bg-dark" id="index-container">
@@ -129,94 +129,103 @@
             </div>
             <div class="col-lg-10 align-self-baseline">
                 <div class="container my-4">
-                    <div id="movie_list" class="carousel align-items-center">
-                        <a class="carousel-control-prev" href="#movie_list" role="button" data-slide="prev" >
+                    <div id="serie_list" class="carousel align-items-center">
+                        <a class="carousel-control-prev" href="#serie_list" role="button" data-slide="prev" >
                             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                             <span class="sr-only">Previous</span>
                         </a>
-                        <a class="carousel-control-next" href="#movie_list" role="button" data-slide="next">
+                        <a class="carousel-control-next" href="#serie_list" role="button" data-slide="next">
                             <span class="carousel-control-next-icon" aria-hidden="true"></span>
                             <span class="sr-only">Next</span>
                         </a>
 
                         <ol class="carousel-indicators">
-                            <li data-target="#movie_list" data-slide-to="0" class="active"></li>
-                            <li data-target="#movie_list" data-slide-to="1"></li>
-                            <li data-target="#movie_list" data-slide-to="2"></li>
+                            <li data-target="#serie_list" data-slide-to="0" class="active"></li>
+                            <li data-target="#serie_list" data-slide-to="1"></li>
+                            <li data-target="#serie_list" data-slide-to="2"></li>
                         </ol>
 
                         <div class="carousel-content" role="listbox">
                             <div class="carousel-item active">
                                 <div class="row">
+                                    {% for title, rating, poster in top_series %}
+                                        {% if forloop.counter0 <= 2 %}
                                     <div class="col-md-4">
                                         <div class="card mb-2" id="full-card">
-                                            <img class="card-img-top" src="../static/assets/img/hp.jpg">
+                                            <img class="card-img-top" src={{ poster }}>
                                             <div class="card-body">
-                                                <h4 class="card-title">Harry Potter</h4>
-                                                <p class="card-text">IMDb Rating: 7.6</p>
+                                                <h4 class="card-title">{{ title }}</h4>
+                                                <p class="card-text">{{ rating }}</p>
                                             </div>
-                                            <div class="overlay" alt="Harry Potter" title="Harry Potter"></div>
+                                            <div class="overlay" alt={{ title }} title={{ title }}></div>
                                             <a class="btn btn-primary" id="more-movie" href="info.html">See more</a>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 clearfix d-none d-md-block">
-                                        <div class="card mb-2" id="full-card">
-                                            <img class="card-img-top" src="../static/assets/img/ts.jpg" alt="Card image top">
-                                            <div class="card-body">
-                                                <h4 class="card-title">Toy Story 2</h4>
-                                                <p class="card-text">IMDb Rating: 7.9</p>
-                                            </div>
-                                            <div class="overlay"></div>
-                                            <a class="btn btn-primary" id="more-movie">See more</a>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-4 clearfix d-none d-md-block">
-                                        <div class="card mb-2" id="full-card">
-                                            <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
-                                            <div class="card-body">
-                                                <h4 class="card-title">Harry Potter</h4>
-                                                <p class="card-text">IMDb Rating: 5.4</p>
-                                            </div>
-                                            <div class="overlay"></div>
-                                            <a class="btn btn-primary" id="more-movie">See more</a>
-                                        </div>
-                                    </div>
+                                        {% endif %}
+                                    {% endfor %}
                                 </div>
                             </div>
                             <div class="carousel-item">
                                 <div class="row">
+                                    {% for title, rating, poster in top_series %}
+                                        {% if forloop.counter0 > 2 %}
+                                            {% if forloop.counter0 <= 5 %}
                                     <div class="col-md-4">
                                         <div class="card mb-2" id="full-card">
-                                            <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
+                                            <img class="card-img-top" src={{ poster }}>
                                             <div class="card-body">
-                                                <h4 class="card-title">Harry Potter</h4>
-                                                <p class="card-text">IMDb Rating: 5.4</p>
+                                                <h4 class="card-title">{{ title }}</h4>
+                                                <p class="card-text">{{ rating }}</p>
                                             </div>
-                                            <div class="overlay"></div>
-                                            <a class="btn btn-primary" id="more-movie">See more</a>
+                                            <div class="overlay" alt={{ title }} title={{ title }}></div>
+                                            <a class="btn btn-primary" id="more-movie" href="info.html">See more</a>
                                         </div>
                                     </div>
-                                    <div class="col-md-4 clearfix d-none d-md-block">
-                                        <div class="card mb-2" id="full-card">
-                                            <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
-                                            <div class="card-body">
-                                                <h4 class="card-title">Harry Potter</h4>
-                                                <p class="card-text">IMDb Rating: 5.4</p>
+                                                {% endif %}
+                                        {% endif %}
+                                    {% endfor %}
+                                </div>
+                            </div>
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        {% for title, rating, poster in top_series %}
+                                            {% if forloop.counter0 > 5 %}
+                                                {% if forloop.counter0 <= 8 %}
+                                        <div class="col-md-4">
+                                            <div class="card mb-2" id="full-card">
+                                                <img class="card-img-top" src={{ poster }}>
+                                                <div class="card-body">
+                                                    <h4 class="card-title">{{ title }}</h4>
+                                                    <p class="card-text">{{ rating }}</p>
+                                                </div>
+                                                <div class="overlay" alt={{ title }} title={{ title }}></div>
+                                                <a class="btn btn-primary" id="more-movie" href="info.html">See more</a>
                                             </div>
-                                            <div class="overlay"></div>
-                                            <a class="btn btn-primary" id="more-movie">See more</a>
                                         </div>
+                                                    {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
                                     </div>
-                                    <div class="col-md-4 clearfix d-none d-md-block">
-                                        <div class="card mb-2" id="full-card">
-                                            <img class="card-img-top" src="../static/assets/img/hp.jpg" alt="Card image top">
-                                            <div class="card-body">
-                                                <h4 class="card-title">Harry Potter</h4>
-                                                <p class="card-text">IMDb Rating: 5.4</p>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="row">
+                                        {% for title, rating, poster in top_series %}
+                                            {% if forloop.counter0 > 8 %}
+                                                {% if forloop.counter0 <= 10 %}
+                                        <div class="col-md-4">
+                                            <div class="card mb-2" id="full-card">
+                                                <img class="card-img-top" src={{ poster }}>
+                                                <div class="card-body">
+                                                    <h4 class="card-title">{{ title }}</h4>
+                                                    <p class="card-text">{{ rating }}</p>
+                                                </div>
+                                                <div class="overlay" alt={{ title }} title={{ title }}></div>
+                                                <a class="btn btn-primary" id="more-movie" href="info.html">See more</a>
                                             </div>
-                                            <div class="overlay"></div>
-                                            <a class="btn btn-primary" id="more-movie">See more</a>
                                         </div>
+                                                {% endif %}
+                                            {% endif %}
+                                        {% endfor %}
                                     </div>
                                 </div>
                             </div>
