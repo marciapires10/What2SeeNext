@@ -36,6 +36,7 @@ declare function funcs:get-mgenres() {
   <genres>{
   let $a := doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
   for $b in distinct-values($a/genres/item/name)
+  order by $b
   return <genre>{$b}</genre>
   }</genres>
 };

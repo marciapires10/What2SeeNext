@@ -100,15 +100,9 @@ def index(request):
 
 def get_movie_genres():
     # create query instance
-    query = session.query(QUERY_MOVIE_GENRES).execute()
-    tree = etree.XML(query)
-    mgenres = tree.xpath(".//movie")
-    list_mgenres = []
+    mgenres = session.query(QUERY_MOVIE_GENRES).execute()
 
-    for m in mgenres:
-        list_mgenres.append(m.text)
-
-    return list_mgenres
+    return mgenres
 
 def movies(request):
     pxml = 'movies.xml'
@@ -122,6 +116,7 @@ def movies(request):
     html = transform(tree)
 
     mgenres = get_movie_genres()
+    print(mgenres)
 
     tparams = {
         'html': html,
