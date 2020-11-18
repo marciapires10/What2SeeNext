@@ -15,6 +15,7 @@ session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
 QUERY_TOP_MOVIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:top-movies()"
 QUERY_TOP_SERIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:top-series()"
 QUERY_MOVIE_GENRES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-mgenres()"
+QUERY_SERIE_GENRES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-sgenres()"
 NO_IMAGE = os.path.join(BASE_DIR, "webapp/files/NoImage.jpg")
 
 
@@ -127,6 +128,15 @@ def movies(request):
 
     return render(request, 'movies_list.html', tparams)
 
+def get_series_genres():
+    # create query instance
+    result = session.query(QUERY_SERIE_GENRES).execute()
+
+    sgenres = result.replace('<genres>', "").replace('<genre>', "").replace('</genre>', "").replace('</genres>', "").replace('&amp;', "&")
+
+    return sgenres
+
+
 def series(request):
     pxml = 'series.xml'
     pxslt = 'series-list.xsl'
@@ -137,8 +147,12 @@ def series(request):
     xslt = ET.parse(fxslt)
     transform = ET.XSLT(xslt)
     html = transform(tree)
+
+    sgenres = get_series_genres()
+
     tparams = {
         'html_series': html,
+        'serie_genres': sgenres,
     }
 
     return render(request, 'series_list.html', tparams)

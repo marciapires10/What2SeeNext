@@ -42,8 +42,9 @@ declare function funcs:get-mgenres() {
 };
 declare function funcs:get-sgenres() {
   <genres>{
-  let $a := doc("C:/Users/JacintoLuf/Desktop/ua/ano4/edc/projeto/EDC_Project/webapp/files/series.xml")//serie
+  let $a := doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
   for $b in distinct-values($a/genres/item/name)
+  order by $b
   return <genre>{$b}</genre>
   }</genres>
 };
