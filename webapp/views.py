@@ -1,12 +1,11 @@
 from django.shortcuts import render
 from lxml import etree
-import sys
-import os
+from django.views.generic import TemplateView
 from django.http import HttpResponse, HttpRequest
 import requests
 import lxml.etree as ET
 from BaseXClient import BaseXClient
-from EDC_Project.settings import BASE_DIR
+from Project.settings import BASE_DIR
 import os
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
@@ -130,13 +129,21 @@ def movies(request):
 def get_series_genres():
     # create query instance
     result = session.query(QUERY_SERIE_GENRES).execute()
-
-    sgenres = result.replace('<genres>', "").replace('<genre>', "").replace('</genre>', "").replace('</genres>', "").replace('&amp;', "&")
+    tree = etree.XML(result)
+    sgenres = [genre.text for genre in tree.xpath(".//genre")]
 
     return sgenres
 
 
 def series(request):
+    if request.method == 'POST':
+        if request.POST.get('checkbox'):
+            print("CHECKBOXES")
+            for box in request.POST.getlist('checkbox'):
+                print(box)
+        #return HttpResponse("Post")
+    else:
+        print("GEt")
     pxml = 'series.xml'
     pxslt = 'series-list.xsl'
     fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
