@@ -10,6 +10,7 @@ declare function funcs:top-movies() {
       $a/poster_path,
       $a/popularity,
       $a/vote_average,
+      $a/id,
       for $c in $a/genres/item
       return $c/name
     }</movie>
@@ -26,6 +27,7 @@ declare function funcs:top-series() {
       $a/poster_path,
       $a/popularity,
       $a/vote_average,
+      $a/id,
       for $c in $a/genres/item
       return $c/name
     }</serie>
@@ -78,14 +80,122 @@ declare function funcs:get-genre-series($g) {
   }</series>
 };
 
-declare function funcs:get-search($s) {
+declare function funcs:get-search-movies($s) {
    <movies>{
-        for $m in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
+        for $m in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
         where contains(lower-case($m/original_title), lower-case($s))
         return $m
    }</movies>
 };
+declare function funcs:get-search-series($s) {
+   <series>{
+        for $m in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+        where contains(lower-case($m/name), lower-case($s))
+        return $m
+   }</series>
+};
+declare function funcs:get-search-persons($s) {
+   <items>{
+        for $mid in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/casts.xml")//cast
+        where $mid/cast/item/original_name = $s
+        return (
+        for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+          where $a/id = $mid/id
+          return $a
+        ),
+        for $mid in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/casts.xml")//cast
+        where $mid/crew/item/original_name = $s
+        return (
+        for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+          where $a/id = $mid/id
+          return $a
+        ),
+        for $mid in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/scredits.xml")//cast
+        where $mid/cast/item/original_name = $s
+        return (
+        for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+          where $a/id = $mid/id
+          return $a
+        ),
+        for $mid in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/scredits.xml")//cast
+        where $mid/crew/item/original_name = $s
+        return (
+        for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+          where $a/id = $mid/id
+          return $a
+        )
+   }</items>
+};
 
+declare function funcs:get-all-series-ordered-genre($g, $i){
+  if ($i = '1') then (
+  for $a in funcs:get-genre-series($g)//serie
+  order by $a/vote_average/text()/xs:double(.) descending
+  return $a
+  )
+  else if ($i = '2') then (
+  for $a in funcs:get-genre-series($g)//serie
+  order by $a/popularity/text()/xs:double(.) descending
+    return $a
+  )
+  else if ($i ='3') then (
+  for $a in funcs:get-genre-series($g)//serie
+  order by $a/name/text()/xs:string(.)
+  return $a
+  )
+};
+declare function funcs:get-all-movies-ordered-genre($g, $i){
+  if ($i = '1') then (
+  for $a in funcs:get-genre-movies($g)//movie
+  order by $a/vote_average/text()/xs:double(.) descending
+  return $a
+  )
+  else if ($i = '2') then (
+  for $a in funcs:get-genre-movies($g)//movie
+  order by $a/popularity/text()/xs:double(.) descending
+    return $a
+  )
+  else if ($i ='3') then (
+  for $a in funcs:get-genre-movies($g)//movie
+  order by $a/original_title/text()/xs:string(.)
+  return $a
+  )
+};
+declare function funcs:get-all-movies-ordered($i){
+  if ($i = '1') then (
+  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+  order by $a/vote_average/text()/xs:double(.) descending
+  return $a
+  )
+  else if ($i = '2') then (
+  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+  order by $a/popularity/text()/xs:double(.) descending
+    return $a
+  )
+  else if ($i ='3') then (
+  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+  order by $a/original_title/text()/xs:string(.)
+  return $a
+  )
+};
+
+declare function funcs:get-all-series-ordered($i){
+  if ($i = '1') then (
+  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+  order by $a/vote_average/text()/xs:double(.) descending
+  return $a
+  )
+  else if ($i = '2') then (
+  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+  order by $a/popularity/text()/xs:double(.) descending
+    return $a
+  )
+  else if ($i ='3') then (
+  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+  order by $a/name/text()/xs:string(.)
+  return $a
+  )
+};
 declare updating function funcs:insert-review() {
 
 };
@@ -93,12 +203,6 @@ declare updating function funcs:delete-review() {
 
 };
 
-declare updating function funcs:insert-review() {
-  
-};
-declare updating function funcs:delete-review() {
-  
-};
 declare updating function funcs:update-review() {
   
 };
