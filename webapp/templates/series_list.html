@@ -11,7 +11,7 @@
                     <h3 style="color: white; text-align: left;">Genre</h3>
                     <table style="color: white">
                         <tr>
-                        <form method="post">
+                        <form action="." method="post">
                             <input type="checkbox" id="all-series" name="all-series">
                             <label for="all-series" style="color: white"><br>All</label>
                             {% for g in serie_genres %}
@@ -24,7 +24,6 @@
                             {% csrf_token %}
                             <td>
                                 <input type="submit" id="submit" name="filter" value="Filter">
-                                    {{ g }}
                             </td>
                          </form>
                         </tr>

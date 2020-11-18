@@ -9,14 +9,20 @@
                             <h3 style="color: white; text-align: left;">Genre</h3>
                             <table style="color: white">
                                 <tr>
+                                <form action="." method="post">
                                     <input type="checkbox" id="all-movies" name="all-movies">
                                     <label for="all-movies" style="color: white"><br>All</label>
                                     {% for g in movie_genres %}
                                         <td>
-                                            <input type="checkbox" id={{ g }} name={{ g }}>
-                                                {{ g }}
+                                            <input type="checkbox" id={{ g }} name="checkbox" value="{{ g }}" class="chkvalues">
+                                            {{ g }}
                                         </td>
-                                {% endfor %}
+                                    {% endfor %}
+                                {% csrf_token %}
+                                <td>
+                                    <input type="submit" id="submit" name="filter" value="Filter">
+                                </td>
+                                </form>
                                 </tr>
                             </table>
                         </div>

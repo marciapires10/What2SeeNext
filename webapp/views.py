@@ -15,6 +15,9 @@ QUERY_TOP_MOVIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs
 QUERY_TOP_SERIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:top-series()"
 QUERY_MOVIE_GENRES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-mgenres()"
 QUERY_SERIE_GENRES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-sgenres()"
+QUERY_SBY_GENRE = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-genre-series({})"
+QUERY_MBY_GENRE = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-genre-movies({})"
+
 NO_IMAGE = "../static/assets/img/NoImage.jpg"
 
 
@@ -106,13 +109,23 @@ def get_movie_genres():
 
     return mgenres
 
-def movies(request):
-    pxml = 'movies.xml'
+def movies(request, filter = None, order = None):
+
+    if 'filter' in request.POST and filter is None and request.POST.get('checkbox'):
+        myDict = dict(request.POST.lists())
+        _filter = myDict['checkbox']
+        return movies(request, _filter)
+    elif 'filter' in request.POST and request.POST.get('checkbox'):
+        query = session.query(QUERY_MBY_GENRE.format(str(filter))).execute()
+        tree = etree.XML(query)
+    else:
+        pxml = 'movies.xml'
+        fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
+        tree = ET.parse(fxml)
+
     pxslt = 'movies-list.xsl'
-    fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
     fxslt = os.path.join(BASE_DIR, 'webapp/files/' + pxslt)
 
-    tree = ET.parse(fxml)
     xslt = ET.parse(fxslt)
     transform = ET.XSLT(xslt)
     html = transform(tree)
@@ -135,27 +148,30 @@ def get_series_genres():
     return sgenres
 
 
-def series(request):
-    if request.method == 'POST':
-        if request.POST.get('checkbox'):
-            print("CHECKBOXES")
-            for box in request.POST.getlist('checkbox'):
-                print(box)
-        #return HttpResponse("Post")
+def series(request , filter = None, order = None):
+
+    if 'filter' in request.POST and filter is None and request.POST.get('checkbox'):
+        myDict = dict(request.POST.lists())
+        _filter = myDict['checkbox']
+        return series(request, _filter)
+    elif 'filter' in request.POST and request.POST.get('checkbox'):
+        query = session.query(QUERY_SBY_GENRE.format(str(filter))).execute()
+        tree = etree.XML(query)
     else:
-        print("GEt")
-    pxml = 'series.xml'
+        pxml = 'series.xml'
+        fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
+        tree = ET.parse(fxml)
+
+
     pxslt = 'series-list.xsl'
-    fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
     fxslt = os.path.join(BASE_DIR, 'webapp/files/' + pxslt)
 
-    tree = ET.parse(fxml)
+
     xslt = ET.parse(fxslt)
     transform = ET.XSLT(xslt)
     html = transform(tree)
 
     sgenres = get_series_genres()
-
     tparams = {
         'html_series': html,
         'serie_genres': sgenres,

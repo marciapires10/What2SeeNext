@@ -2,7 +2,7 @@ module namespace funcs = "com.funcs.catalog";
 
 declare function funcs:top-movies() {
   <movies>{
-  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
+  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
   order by $a/vote_average/text()/xs:double(.) descending
   return (
     <movie>{
@@ -18,7 +18,7 @@ declare function funcs:top-movies() {
 };
 declare function funcs:top-series() {
   <series>{
-  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
+  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
   order by $a/vote_average/text()/xs:double(.) descending
   return (
     <serie>{
@@ -34,7 +34,7 @@ declare function funcs:top-series() {
 };
 declare function funcs:get-mgenres() {
   <genres>{
-  let $a := doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
+  let $a := doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
   for $b in distinct-values($a/genres/item/name)
   order by $b
   return <genre>{$b}</genre>
@@ -42,7 +42,7 @@ declare function funcs:get-mgenres() {
 };
 declare function funcs:get-sgenres() {
   <genres>{
-  let $a := doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
+  let $a := doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
   for $b in distinct-values($a/genres/item/name)
   order by $b
   return <genre>{$b}</genre>
@@ -50,26 +50,27 @@ declare function funcs:get-sgenres() {
 };
 declare function funcs:get-genre-movies($g) {
   <movies>{
-  for $a in doc("C:/Users/JacintoLuf/Desktop/ua/ano4/edc/projeto/EDC_Project/webapp/files/movies.xml")//movie
-  where $a/genres/item/name = $g
+  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+  where ((for $g_item in $g return $g_item = $a/genres/item/name) = true())
   return (
     <movie>{
       $a/original_title,
-      $a/backdrop_path,
+      $a/poster_path,
       $a/popularity,
       $a/vote_average
     }</movie>
   )
   }</movies>
 };
+
 declare function funcs:get-genre-series($g) {
   <series>{
-  for $a in doc("C:/Users/JacintoLuf/Desktop/ua/ano4/edc/projeto/EDC_Project/webapp/files/series.xml")//serie
-  where $a/genres/item/name = $g
+  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+  where ((for $g_item in $g return $g_item = $a/genres/item/name) = true())
   return (
     <serie>{
-      $a/original_title,
-      $a/backdrop_path,
+      $a/name,
+      $a/poster_path,
       $a/popularity,
       $a/vote_average
     }</serie>
