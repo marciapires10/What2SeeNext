@@ -13,7 +13,8 @@ MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
 IMAGES_SITE = "http://image.tmdb.org/t/p/w200"
 session = BaseXClient.Session('localhost', 1984, 'admin', 'admin')
 QUERY_TOP_MOVIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:top-movies()"
-QUERY_TOP_SERIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:top-movies()"
+QUERY_TOP_SERIES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:top-series()"
+QUERY_MOVIE_GENRES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-mgenres()"
 NO_IMAGE = os.path.join(BASE_DIR, "webapp/files/NoImage.jpg")
 
 
@@ -40,7 +41,7 @@ def get_top_rated_movies():
     return movies_list
 
 
-def get_top_rate_series():
+def get_top_rated_series():
     # create query instance
     query = session.query(QUERY_TOP_SERIES).execute()
     series_list = []
@@ -89,7 +90,7 @@ def get_rss():
 
 def index(request):
     top_movies = get_top_rated_movies()
-    top_series = get_top_rate_series()
+    top_series = get_top_rated_series()
     news = get_rss()
     t_params = {'news': news,
                 'top_movies': top_movies,
@@ -98,6 +99,17 @@ def index(request):
 
     return render(request, 'index.html', t_params)
 
+def get_movie_genres():
+    # create query instance
+    query = session.query(QUERY_MOVIE_GENRES).execute()
+    tree = etree.XML(query)
+    mgenres = tree.xpath(".//movie")
+    list_mgenres = []
+
+    for m in mgenres:
+        list_mgenres.append(m.text)
+
+    return list_mgenres
 
 def movies(request):
     pxml = 'movies.xml'
@@ -110,11 +122,11 @@ def movies(request):
     transform = ET.XSLT(xslt)
     html = transform(tree)
 
-    genres = get_movie_genres()
+    mgenres = get_movie_genres()
 
     tparams = {
         'html': html,
-        'movie_genres': genres,
+        'movie_genres': mgenres,
     }
 
     return render(request, 'movies_list.html', tparams)

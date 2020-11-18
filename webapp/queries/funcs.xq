@@ -34,7 +34,7 @@ declare function funcs:top-series() {
 };
 declare function funcs:get-mgenres() {
   <genres>{
-  let $a := doc("C:/Users/JacintoLuf/Desktop/ua/ano4/edc/projeto/EDC_Project/webapp/files/movies.xml")//movie
+  let $a := doc(/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
   for $b in distinct-values($a/genres/item/name)
   return <genre>{$b}</genre>
   }</genres>
