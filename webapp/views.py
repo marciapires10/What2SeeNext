@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from lxml import etree
 from django.views.generic import TemplateView
-from django.http import HttpResponse, HttpRequest
+from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 import requests
 import lxml.etree as ET
 from BaseXClient import BaseXClient
-from Project.settings import BASE_DIR
+from EDC_Project.settings import BASE_DIR
 import os
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
@@ -123,6 +123,11 @@ def movies(request, filter = None, order = None):
         fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
         tree = ET.parse(fxml)
 
+    if 'search' in request.POST:
+        str = request.POST.get('search', '')
+        print(str)
+        return HttpResponseRedirect('/search_results/' + str)
+
     pxslt = 'movies-list.xsl'
     fxslt = os.path.join(BASE_DIR, 'webapp/files/' + pxslt)
 
@@ -202,14 +207,16 @@ def movie_review():
 
     return html
 
-def get_search_results(request):
-    assert isinstance(request, HttpRequest)
-    if 'a' in request.POST:
-        title = request.POST['a']
+def get_search_results(request, str):
+    # create query instance
+    query = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-search(<movies>'" + str + "'</movies>)"
+    result = session.query(query).execute()
+    tree = etree.XML(result)
+    print(tree)
 
-        if title:
-            return render(request, 'search_result.html')
-        else:
-            return render(request, 'movies_list.html')
-    else:
-        return render(request, 'movies_list.html')
+    tparams = {
+        'str': str,
+        'result': tree,
+    }
+
+    return render(request, 'search_result.html', tparams)

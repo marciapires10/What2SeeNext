@@ -41,7 +41,7 @@
                                                 <p class="card-text">{{ rating }}</p>
                                             </div>
                                             <div class="overlay" alt={{ title }} title={{ title }}></div>
-                                            <a class="btn btn-primary" id="more-movie" href="info.html">See more</a>
+                                            <a class="btn btn-primary" id="more-movie" href="{% url 'detail_info'  %}">See more</a>
                                         </div>
                                     </div>
                                         {% endif %}

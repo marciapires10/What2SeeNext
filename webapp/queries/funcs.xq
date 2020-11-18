@@ -78,6 +78,21 @@ declare function funcs:get-genre-series($g) {
   }</series>
 };
 
+declare function funcs:get-search($s) {
+   <movies>{
+        for $m in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
+        where contains(lower-case($m/original_title), lower-case($s))
+        return $m
+   }</movies>
+};
+
+declare updating function funcs:insert-review() {
+
+};
+declare updating function funcs:delete-review() {
+
+};
+
 declare updating function funcs:insert-review() {
   
 };

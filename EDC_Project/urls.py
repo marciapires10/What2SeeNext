@@ -25,5 +25,5 @@ urlpatterns = [
     path('movies/', views.movies, name='movies'),
     path('series/', views.series, name='series'),
     path('detail-info/', views.detail_info, name='detail_info'),
-    path('search_results', views.get_search_results, name='search_results'),
+    path('search_results/<str>/', views.get_search_results, name='search_results'),
 ]

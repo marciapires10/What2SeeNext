@@ -24,7 +24,15 @@
                                         </xsl:attribute>
                                     </img>
                                     <div class="overlay"/>
-                                    <a class="btn btn-primary" id="more-movie-all">See more</a>
+                                    <a class="btn btn-primary">
+                                        <xsl:attribute name="id">
+                                            "more-movie-all"
+                                        </xsl:attribute>
+                                        <xsl:attribute name="name">
+                                            <xsl:value-of select="id"/>
+                                        </xsl:attribute>
+                                        See more
+                                    </a>
                                 </div>
                             </div>
                         </td>
@@ -48,8 +56,16 @@
                                             </xsl:attribute>
                                         </img>
                                         <div class="overlay"/>
-                                        <a class="btn btn-primary" id="more-movie-all">See more</a>
-                                    </div>
+                                    <a class="btn btn-primary">
+                                        <xsl:attribute name="id">
+                                            "more-movie-all"
+                                        </xsl:attribute>
+                                        <xsl:attribute name="name">
+                                            <xsl:value-of select="id"/>
+                                        </xsl:attribute>
+                                        See more
+                                    </a>
+                                </div>
                                 </div>
                             </td>
                         <tr class="space">
