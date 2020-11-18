@@ -100,7 +100,9 @@ def index(request):
 
 def get_movie_genres():
     # create query instance
-    mgenres = session.query(QUERY_MOVIE_GENRES).execute()
+    result = session.query(QUERY_MOVIE_GENRES).execute()
+
+    mgenres = result.replace('<genres>', "").replace('<genre>', "").replace('</genre>', "").replace('</genres>', "")
 
     return mgenres
 

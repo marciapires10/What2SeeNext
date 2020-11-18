@@ -30,8 +30,11 @@
                 <div class="collapse navbar-collapse" id="navbarResponsive">
                     <ul class="navbar-nav ml-auto my-2 my-lg-0">
                         <div class="container" id="search-container">
-                            <input type="text" placeholder="Search for movies, series, ..." name="search">
-                            <button type="submit"><i class="fa fa-search"></i></button>
+                            <form action="." method="post">
+                                {% csrf_token %}
+                                <input type="text" placeholder="Search for movies, series, ..." name="search">
+                                <button type="submit"><i class="fa fa-search"></i></button>
+                            </form>
                         </div>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'movies' %}">Movies</a></li>
                         <li class="nav-item"><a class="nav-link js-scroll-trigger" href="{% url 'series' %}">Series</a></li>
