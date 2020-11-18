@@ -18,12 +18,12 @@ declare function funcs:top-movies() {
 };
 declare function funcs:top-series() {
   <series>{
-  for $a in doc(/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
   order by $a/vote_average/text()/xs:double(.) descending
   return (
     <serie>{
       $a/original_name,
-      $a/backdrop_path,
+      $a/poster_path,
       $a/popularity,
       $a/vote_average,
       for $c in $a/genres/item
@@ -34,7 +34,7 @@ declare function funcs:top-series() {
 };
 declare function funcs:get-mgenres() {
   <genres>{
-  let $a := doc(/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
+  let $a := doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
   for $b in distinct-values($a/genres/item/name)
   return <genre>{$b}</genre>
   }</genres>

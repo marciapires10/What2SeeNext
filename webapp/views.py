@@ -46,18 +46,17 @@ def get_top_rated_series():
     query = session.query(QUERY_TOP_SERIES).execute()
     series_list = []
     tree = etree.XML(query)
-    series = tree.xpath(".//serie")
 
+    series = tree.xpath(".//serie")
     for serie in series:
         serie_temp = []
-        serie_temp.append(serie.find("name").text)
+        serie_temp.append(serie.find("original_name").text)
         serie_temp.append(serie.find("vote_average").text)
         if serie.find("poster_path").text is not None:
             poster_url = IMAGES_SITE + serie.find("poster_path").text
         else:
             poster_url = NO_IMAGE
         serie_temp.append(poster_url)
-
         series_list.append(serie_temp)
 
     return series_list
