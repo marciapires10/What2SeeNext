@@ -23,7 +23,6 @@
                                             "card-img-all"
                                         </xsl:attribute>
                                     </img>
-                                    <form method="post">
                                         <div class="overlay">
                                             <xsl:attribute name="alt">
                                                 <xsl:value-of select="original_title"/>
@@ -38,7 +37,6 @@
                                             </xsl:attribute>
                                             See more
                                         </button>
-                                    </form>
                                 </div>
                             </div>
                         </td>
@@ -61,7 +59,6 @@
                                                 "card-img-all"
                                             </xsl:attribute>
                                         </img>
-                                        <form method="post">
                                             <div class="overlay">
                                                 <xsl:attribute name="alt">
                                                     <xsl:value-of select="original_title"/>
@@ -76,7 +73,6 @@
                                                 </xsl:attribute>
                                                 See more
                                             </button>
-                                        </form>
                                 </div>
                                 </div>
                             </td>

@@ -46,6 +46,8 @@
                         </form>
                         </div>
                     </div>
+                    <form action="." method="post">
+                    {% csrf_token %}
                     <div class="col-lg-10" style="padding-top: 40px; padding-bottom: 20px; display: flex; justify-content: center;">
                             <table style="align-self: center;">
                                 <tr class="space">
@@ -53,6 +55,7 @@
                                 </tr>
                             </table>
                     </div>
+                </form>
                 </div>
             </div>
         </header>

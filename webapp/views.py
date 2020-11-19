@@ -137,6 +137,11 @@ def get_movie_genres():
     return mgenres
 
 def movies(request, filter = None, order = None):
+    if 'info-m' in request.POST:
+        id = request.POST.get('info-m')
+        print(id)
+        detail_info(request, id)
+        return HttpResponseRedirect('/info/' + id)
     if filter is None and request.POST.get('checkbox'):
         myDict = dict(request.POST.lists())
         _filter = myDict['checkbox']
@@ -205,6 +210,12 @@ def get_series_genres():
 
 
 def series(request , filter = None, order = None):
+    if 'info-m' in request.POST:
+        id = request.POST.get('info-m')
+        id_serie = str(id) + ".s"
+        print(id_serie)
+        detail_info(request, id_serie)
+        return HttpResponseRedirect('/info/' + id_serie)
     if filter is None and request.POST.get('checkbox'):
         myDict = dict(request.POST.lists())
         _filter = myDict['checkbox']
