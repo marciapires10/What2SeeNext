@@ -46,16 +46,16 @@
                         </form>
                         </div>
                     </div>
-                    <form action="." method="post">
-                    {% csrf_token %}
                     <div class="col-lg-10" style="padding-top: 40px; padding-bottom: 20px; display: flex; justify-content: center;">
-                            <table style="align-self: center;">
+                        <form action="." method="post">
+                        {% csrf_token %}
+                        <table style="align-self: center;">
                                 <tr class="space">
                                     {{ html | safe }}
                                 </tr>
                             </table>
+                        </form>
                     </div>
-                </form>
                 </div>
             </div>
         </header>
