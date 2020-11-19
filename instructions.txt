@@ -1,0 +1,17 @@
+Informação e dados necessários para a correta execução do sistema:
+
+1) Instalar as dependências necessárias executando o seguinte comando:
+	pip3 install Django==3.1 lxml BaseXClient==8.4.4
+	
+2) Inserir o conteúdo extraído do ficheiro zip "moviesDB.zip" na pasta "data" do diretório onde está instalado o BaseX
+
+3) Com o BaseX aberto, abrir a base de dados "moviesDB". Selecionar Options -> Packages -> Install e escolher o ficheiro "funcs.xq"
+
+4) Navegar até à pasta "bin", dentro do diretório onde está instalado o BaseX, e executar o comando:
+	./basexserver
+	
+5) Por fim, executar o comando:
+	python3 manage.py runserver
+   no diretório do projeto
+   
+    
