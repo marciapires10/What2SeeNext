@@ -31,7 +31,7 @@
                                                 <xsl:value-of select="original_title"/>
                                             </xsl:attribute>
                                         </div>
-                                        <button type="submit" name="info-m" class="btn btn-primary" id="more-movie-all">
+                                        <button type="submit" name="info-m" class="btn btn-primary" id="more-movie-all" style="margin-top: 150px; margin-top: -50x;">
                                             <xsl:attribute name="value">
                                                 <xsl:value-of select="id"/>
                                             </xsl:attribute>
@@ -67,7 +67,7 @@
                                                     <xsl:value-of select="original_title"/>
                                                 </xsl:attribute>
                                             </div>
-                                            <button type="submit" name="info-m" class="btn btn-primary" id="more-movie-all">
+                                            <button type="submit" name="info-m" class="btn btn-primary" id="more-movie-all" style="margin-top: 150px; margin-top: -50x;">
                                                 <xsl:attribute name="value">
                                                     <xsl:value-of select="id"/>
                                                 </xsl:attribute>

@@ -4468,8 +4468,6 @@ tr.space > td{
 #more-movie-all{
   opacity: 0;
   transition: opacity 0.35s ease;
-  margin-left: -50px;
-  margin-top: 150px;
 }
 
 #full-card:hover #more-movie, #full-card-all:hover #more-movie-all{
@@ -10312,6 +10310,10 @@ header.masthead h1 {
   background-color: #303336;
 }
 
+.dropdown-content input[type="submit"]:hover{
+  background-color: #303336;
+}
+
 .show {
   display: block;
 }
@@ -10421,8 +10423,4 @@ header.masthead h1 {
 
 #top-series{
   height: 100vh;
-}
-
-#Title input[type="submit"]:hover{
-  color: white; !important;
 }
