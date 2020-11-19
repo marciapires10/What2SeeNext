@@ -14,10 +14,9 @@
             <div class="container" id="movie-info-container">
                 <div class="container" id="poster-container">
                     <img class="img-fluid" src="{{ poster }}" alt="" id="poster"/>
+                    <h4 style="padding-top: 30px; color: white"><b>IMDb Rating: </b>{{ voteavg }} <i class="fas fa-star" style="color:#c69500;"></i></h4>
                 </div>
                 <div class="container" style="color: white;" id="movie-text-info">
-
-                    <h4 style="padding-top: 30px; color: white"><b>IMDb Rating: </b>{{ voteavg }} <i class="fas fa-star" style="color:#c69500;"></i></h4>
                     <h5><b>Release Date: </b>{{ date }}</h5>
                     <h5><b>Runtime: </b>{{ runtime }}<b style="padding-left: 40px">Status: </b>{{ status }}</h5>
                     <p style="padding-bottom: 10px"></p>

@@ -373,7 +373,7 @@ def detail_info(request, id):
                             cast_str += ", " + cast.find("original_name").text + " (as " + cast.find(
                                 "character").text + ")"
                         else:
-                            cast_str += ", " + cast.find("original_name").text + " (as " + cast.find(
+                            cast_str += cast.find("original_name").text + " (as " + cast.find(
                                 "character").text + ")"
                             cast_is_found = True
                         count += 1
