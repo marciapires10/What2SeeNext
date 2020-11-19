@@ -24,7 +24,6 @@
                                         </xsl:attribute>
                                     </img>
                                     <form method="post">
-                                        {% csrf_token %}
                                         <div class="overlay">
                                             <xsl:attribute name="alt">
                                                 <xsl:value-of select="original_title"/>
@@ -63,7 +62,6 @@
                                             </xsl:attribute>
                                         </img>
                                         <form method="post">
-                                            {% csrf_token %}
                                             <div class="overlay">
                                                 <xsl:attribute name="alt">
                                                     <xsl:value-of select="original_title"/>

@@ -24,7 +24,6 @@
                                         </xsl:attribute>
                                     </img>
                                     <form method="post">
-                                        {% csrf_token %}
                                         <div class="overlay">
                                             <xsl:attribute name="alt">
                                                 <xsl:value-of select="original_title"/>
@@ -63,22 +62,21 @@
                                             </xsl:attribute>
                                         </img>
                                         <form method="post">
-                                        {% csrf_token %}
-                                        <div class="overlay">
-                                            <xsl:attribute name="alt">
-                                                <xsl:value-of select="original_title"/>
-                                            </xsl:attribute>
-                                            <xsl:attribute name="title">
-                                                <xsl:value-of select="original_title"/>
-                                            </xsl:attribute>
-                                        </div>
-                                        <button type="submit" name="info-m" class="btn btn-primary" id="more-movie-all">
-                                            <xsl:attribute name="value">
-                                                <xsl:value-of select="id"/>
-                                            </xsl:attribute>
-                                            See more
-                                        </button>
-                                    </form>
+                                            <div class="overlay">
+                                                <xsl:attribute name="alt">
+                                                    <xsl:value-of select="original_title"/>
+                                                </xsl:attribute>
+                                                <xsl:attribute name="title">
+                                                    <xsl:value-of select="original_title"/>
+                                                </xsl:attribute>
+                                            </div>
+                                            <button type="submit" name="info-m" class="btn btn-primary" id="more-movie-all">
+                                                <xsl:attribute name="value">
+                                                    <xsl:value-of select="id"/>
+                                                </xsl:attribute>
+                                                See more
+                                            </button>
+                                        </form>
                                 </div>
                                 </div>
                             </td>
