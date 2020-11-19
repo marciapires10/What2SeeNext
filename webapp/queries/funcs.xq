@@ -1,7 +1,7 @@
 module namespace funcs = "com.funcs.catalog";
 
 declare function funcs:top-movies() {
-  <movies>{
+  <movies>{(
   for $a in doc("movieDB/movies.xml")//movie
   order by $a/vote_average/text()/xs:double(.) descending
   return (
@@ -14,11 +14,11 @@ declare function funcs:top-movies() {
       for $c in $a/genres/item
       return $c/name
     }</movie>
-  )[position() le 9]
+  ))[position() < 11]
   }</movies>
 };
 declare function funcs:top-series() {
-  <series>{
+  <series>{(
   for $a in doc("movieDB/series.xml")//serie
   order by $a/vote_average/text()/xs:double(.) descending
   return (
@@ -31,7 +31,7 @@ declare function funcs:top-series() {
       for $c in $a/genres/item
       return $c/name
     }</serie>
-  )[position() le 9]
+  ))[position() < 11]
   }</series>
 };
 declare function funcs:get-mgenres() {
