@@ -8,7 +8,7 @@
             <h2 style="color: white;">Results for '{{ str }}'</h2>
             <div class="container" id="movie-search-container">
                 <table id="movies-search">
-                    {% for title, rating, poster, duration, date, genre, overview in result_movies %}
+                    {% for id, title, rating, poster, duration, date, genre, overview, is_movie in result_movies %}
                     <tr>
                         <td id="poster-search">
                             <div class="container">
@@ -27,12 +27,14 @@
                                 <p></p>
                                 <h7>IMDb rating: {{ rating }}</h7>
                                 <p></p>
-                                <button>See more</button>
-                            </div>
+                                <form method="post" action=".">
+                                    {% csrf_token %}
+                                    <button type="submit" name="show_info" class="btn btn-primary" value="{{ is_movie }},{{ id }}">See more</button>
+                                </form></div>
                         </td>
                     </tr>
                 {% endfor %}
-                {% for title, rating, poster, date, genre, overview in result_series%}
+                {% for id, title, rating, poster, date, genre, overview, is_movie in result_series%}
                     <tr>
                         <td id="poster-search">
                             <div class="container">
@@ -49,12 +51,14 @@
                                 <p></p>
                                 <h7>IMDb rating: {{ rating }}</h7>
                                 <p></p>
-                                <button>See more</button>
-                            </div>
+                                <form method="post" action=".">
+                                    {% csrf_token %}
+                                    <button type="submit" name="show_info" class="btn btn-primary" value="{{ is_movie }},{{ id }}"}>See more</button>
+                                </form></div>
                         </td>
                     </tr>
                 {% endfor %}
-                {% for title, rating, poster, duration, date, genre, overview in result_cast_movies %}
+                {% for id, title, rating, poster, duration, date, genre, overview , is_movie in result_cast_movies %}
                     <tr>
                         <td id="poster-search">
                             <div class="container">
@@ -73,12 +77,15 @@
                                 <p></p>
                                 <h7>IMDb rating: {{ rating }}</h7>
                                 <p></p>
-                                <button>See more</button>
+                                <form method="post" action=".">
+                                    {% csrf_token %}
+                                    <button type="submit" name="show_info" class="btn btn-primary" value="{{ is_movie }},{{ id }}">See more</button>
+                                </form>
                             </div>
                         </td>
                     </tr>
                 {% endfor %}
-                {% for title, rating, poster, date, genre, overview in result_cast_series%}
+                {% for id, title, rating, poster, date, genre, overview, is_movie in result_cast_series%}
                     <tr>
                         <td id="poster-search">
                             <div class="container">
@@ -95,7 +102,10 @@
                                 <p></p>
                                 <h7>IMDb rating: {{ rating }}</h7>
                                 <p></p>
-                                <button>See more</button>
+                                <form method="post" action=".">
+                                    {% csrf_token %}
+                                    <button type="submit" name="show_info" class="btn btn-primary" value="{{ is_movie }},{{ id }}">See more</button>
+                                </form>
                             </div>
                         </td>
                     </tr>

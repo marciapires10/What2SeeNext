@@ -14,11 +14,11 @@
             <div class="container" id="movie-info-container">
                 <div class="container" id="poster-container">
                     <img class="img-fluid" src="{{ poster }}" alt="" id="poster"/>
-                    <h4 style="padding-top: 30px; color: white"><b>IMDb Rating: </b>{{ voteavg }} <i class="fas fa-star" style="color:#c69500;"></i></h4>
                 </div>
                 <div class="container" style="color: white;" id="movie-text-info">
+
+                    <h4 style="padding-top: 30px; color: white"><b>IMDb Rating: </b>{{ voteavg }} <i class="fas fa-star" style="color:#c69500;"></i></h4>
                     <h5><b>Release Date: </b>{{ date }}</h5>
-                    <p></p>
                     <h5><b>Runtime: </b>{{ runtime }}<b style="padding-left: 40px">Status: </b>{{ status }}</h5>
                     <p style="padding-bottom: 10px"></p>
                     <h5><b>Genres: </b>{{ genres }}</h5>
@@ -29,7 +29,6 @@
                     <p></p>
                     <p style="padding-bottom: 20px"></p>
                     <h5 style="overflow: auto; height: 130px;"><b>Overview: </b>{{ overv }}</h5>
-                    <p></p>
                 </div>
             </div>
             {% endfor %}
@@ -46,11 +45,12 @@
                 <hr class="divider light my-4" />
             </div>
             <div class="col-lg-10" style="padding-top: 40px;">
-                <h3 style="color: white">Review this title</h3>
                 <form role="form" method="POST" id="new-review">
-                    <input style="width: 200px;" class="form-control" type="text" id="review-area-author" placeholder="Insert your username" required="required">
+                <h3 style="color: white">Review this title</h3>
+                    {% csrf_token %}
+                    <input style="width: 200px;" class="form-control" type="text" id="review-area-author" placeholder="Insert your username" required="required" name="username">
                     <p></p>
-                    <textarea style="height: 250px;" class="form-control" type="textarea" id="review-area-content" placeholder="Insert your review!" required="required"></textarea>
+                    <textarea style="height: 250px;" class="form-control" type="textarea" id="review-area-content" placeholder="Insert your review!" required="required" name="comment"></textarea>
                     <p></p>
                     <button type="submit" class="btn btn-primary" style="background-color: #1b1d1f">Post review</button>
                     <p></p>
@@ -61,7 +61,10 @@
                 <p></p>
                 <table>
                     <tr>
+                        <form role="form" method="POST" id="delete">
+                            {% csrf_token %}
                         {{ html_review | safe }}
+                        </form>
                     </tr>
                 </table>
             </div>

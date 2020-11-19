@@ -21,8 +21,14 @@ QUERY_MORDER_GENRE = "import module namespace funcs = \"com.funcs.catalog\"; fun
 QUERY_MORDER = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-all-movies-ordered({})"
 QUERY_SORDER_GENRE = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-all-series-ordered-genre({},{})"
 QUERY_SORDER = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-all-series-ordered({})"
-
-
+QUERY_REVIEW_MOVIE =  "import module namespace funcs = \"com.funcs.catalog\";funcs:get-review({})"
+QUERY_REVIEW_SERIE =  "import module namespace funcs = \"com.funcs.catalog\";funcs:get-sreview({})"
+QUERY_ADD_REVIEW = "import module namespace funcs = \"com.funcs.catalog\";funcs:insert-review(\'{}\',\"{}\",\"{}\")"
+QUERY_ADD_SREVIEW = "import module namespace funcs = \"com.funcs.catalog\";funcs:insert-sreview(\'{}\',\"{}\",\"{}\")"
+QUERY_UPDATE_REVIEW = "import module namespace funcs = \"com.funcs.catalog\";funcs:update-review(\'{}\',\"{}\",\"{}\")"
+QUERY_UPDATE_SREVIEW = "import module namespace funcs = \"com.funcs.catalog\";funcs:update-sreview(\'{}\',\"{}\",\"{}\")"
+QUERY_DELETE_REVIEW = "import module namespace funcs = \"com.funcs.catalog\";funcs:delete-review(\'{}\',\"{}\")"
+QUERY_DELETE_SREVIEW = "import module namespace funcs = \"com.funcs.catalog\";funcs:delete-sreview(\'{}\',\"{}\")"
 
 NO_IMAGE = "../static/assets/img/NoImage.jpg"
 
@@ -105,7 +111,6 @@ def get_rss():
                 movie.append(item.find("guid").text)
             if item.find("pubDate") is not None:
                 movie.append(item.find("pubDate").text)
-
             movies.append(movie)
 
     return movies
@@ -118,7 +123,6 @@ def index(request):
 
     if 'info-m' in request.POST:
         id = request.POST.get('info-m')
-        print(id)
         detail_info(request, id)
         return HttpResponseRedirect('/info/' + id)
 
@@ -142,7 +146,6 @@ def get_movie_genres():
 def movies(request, filter = None, order = None):
     if 'info-m' in request.POST:
         id = request.POST.get('info-m')
-        print(id)
         detail_info(request, id)
         return HttpResponseRedirect('/info/' + id)
     if filter is None and request.POST.get('checkbox'):
@@ -162,7 +165,6 @@ def movies(request, filter = None, order = None):
                 query = session.query(QUERY_MORDER_GENRE.format(str(filter), 2)).execute()
             else:
                 query = session.query(QUERY_MORDER_GENRE.format(str(filter), 3)).execute()
-            print(query)
             tree = etree.XML(query)
         else:
             query = session.query(QUERY_MBY_GENRE.format(str(filter))).execute()
@@ -213,10 +215,12 @@ def get_series_genres():
 
 
 def series(request , filter = None, order = None):
+    if 'search' in request.POST:
+        search_str = request.POST.get('search', '')
+        return HttpResponseRedirect('/search_results/' + search_str)
     if 'info-m' in request.POST:
         id = request.POST.get('info-m')
         id_serie = str(id) + ".s"
-        print(id_serie)
         detail_info(request, id_serie)
         return HttpResponseRedirect('/info/' + id_serie)
     if filter is None and request.POST.get('checkbox'):
@@ -230,16 +234,17 @@ def series(request , filter = None, order = None):
 
     elif request.POST.get('checkbox'):
         if request.POST.get('order'):
+            send_filter = str(filter).replace("&", "&amp;")
             if order == "Average":
-                query = session.query(QUERY_SORDER_GENRE.format(str(filter), 1)).execute()
+                query = session.query(QUERY_SORDER_GENRE.format(send_filter, 1)).execute()
             elif order == "Popularity":
-                query = session.query(QUERY_SORDER_GENRE.format(str(filter), 2)).execute()
+                query = session.query(QUERY_SORDER_GENRE.format(send_filter, 2)).execute()
             else:
-                query = session.query(QUERY_SORDER_GENRE.format(str(filter), 3)).execute()
-            print(query)
+                query = session.query(QUERY_SORDER_GENRE.format(send_filter, 3)).execute()
             tree = etree.XML(query)
         else:
-            query = session.query(QUERY_SBY_GENRE.format(str(filter))).execute()
+            send_filter = str(filter).replace("&","&amp;")
+            query = session.query(QUERY_SBY_GENRE.format(send_filter)).execute()
             tree = etree.XML(query)
     else:
         if request.POST.get('order'):
@@ -275,19 +280,23 @@ def series(request , filter = None, order = None):
     return render(request, 'series_list.html', tparams)
 
 def detail_info(request, id):
-    # create query instance
-    print(id)
+
+    if 'search' in request.POST:
+        req = request.POST.get('search', '')
+        return HttpResponseRedirect('/search_results/' + req)
+
+    id_original = id
     id_list = id.split(".")
-    print(len(id_list))
     is_movie = True
     if len(id_list) == 2:
+        print("Movie")
         is_movie = False
         id = id_list[0]
         query = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-fullserieinfo('" + id + "')"
     else:
+        print("Serie")
         query = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-fullinfo('" + id + "')"
     result = session.query(query).execute()
-    print(id)
     print(result)
     tree = etree.XML(result)
 
@@ -299,6 +308,7 @@ def detail_info(request, id):
     status = "Released"
     cast_is_found = False
     crew_is_found = False
+
     for item in tree:
         info_tmp = []
 
@@ -360,9 +370,11 @@ def detail_info(request, id):
                 for cast in item.find("cast"):
                     if cast.find("character").text is not None and cast.find("original_name").text is not None:
                         if cast_is_found:
-                            cast_str +=", " + cast.find("original_name").text + " (as " + cast.find("character").text + ")"
+                            cast_str += ", " + cast.find("original_name").text + " (as " + cast.find(
+                                "character").text + ")"
                         else:
-                            cast_str += cast.find("original_name").text + " (as " + cast.find("character").text + ")"
+                            cast_str += ", " + cast.find("original_name").text + " (as " + cast.find(
+                                "character").text + ")"
                             cast_is_found = True
                         count += 1
                     if count >= 5:
@@ -400,33 +412,62 @@ def detail_info(request, id):
     info_tmp.append(crew_str)
     info_list.append(info_tmp)
 
-   # m_review = movie_review()
-
+    review = get_review(id, is_movie)
     tparams = {
-        #'html_review': m_review,
+        'html_review': review,
         'result': info_list,
     }
 
+    if request.POST.get('delete'):
+        if is_movie:
+            query = QUERY_DELETE_REVIEW.format(id, request.POST.get('delete'))
+        else:
+            query = QUERY_DELETE_SREVIEW.format(id, request.POST.get('delete'))
+        session.query(query).execute()
+        return HttpResponseRedirect('/info/' + id_original)
+
+    if request.POST.get('username') and request.POST.get('comment'):
+        if is_movie:
+            query = QUERY_ADD_REVIEW.format(id, request.POST.get('username'), request.POST.get('comment'))
+        else:
+            query = QUERY_ADD_SREVIEW.format(id, request.POST.get('username'), request.POST.get('comment'))
+
+        session.query(query).execute()
+        return HttpResponseRedirect('/info/' + id_original)
+
     return render(request, 'info.html', tparams)
 
-def movie_review():
-    pxml = 'reviews.xml'
-    pxslt = 'movie-reviews.xsl'
-    fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
-    fxslt = os.path.join(BASE_DIR, 'webapp/files/' + pxslt)
+def get_review(id, is_movie):
 
-    tree = ET.parse(fxml)
+    if not is_movie:
+        query = QUERY_REVIEW_SERIE.format(id)
+    else:
+        query = QUERY_REVIEW_MOVIE.format(id)
+
+    result = session.query(query).execute()
+    tree = etree.XML(result)
+    pxslt = 'movie-reviews.xsl'
+    tree = etree.XML(result)
+    fxslt = os.path.join(BASE_DIR, 'webapp/files/' + pxslt)
     xslt = ET.parse(fxslt)
     transform = ET.XSLT(xslt)
     html = transform(tree)
-
     return html
 
 def get_search_results(request, str):
     if 'search' in request.POST:
         str = request.POST.get('search', '')
-        print(str)
         return HttpResponseRedirect('/search_results/' + str)
+    if 'show_info' in request.POST:
+        res = request.POST.get('show_info')
+        res_div = res.split(",")
+        if res_div[0] == "True":
+            id = res_div[1]
+        else:
+            id = res_div[1] + ".s"
+        print(id)
+        detail_info(request, id)
+        return HttpResponseRedirect('/info/' + id)
     # create query instance
     # titulo, rating, poster, duracao, data, generos, resumo
 
@@ -465,6 +506,10 @@ def get_series_search(series):
     for serie in series:
 
         serie_temp = []
+        if serie.find("id").text is not None:
+            id = serie.find("id").text
+        else:
+            id = "Undefined"
         if serie.find("poster_path").text is not None:
             poster_url = IMAGES_SITE + serie.find("poster_path").text
         else:
@@ -485,13 +530,14 @@ def get_series_search(series):
         else:
             overview = "Undefined"
 
+        serie_temp.append(id)
         serie_temp.append(serie.find("name").text)
         serie_temp.append(serie.find("vote_average").text)
         serie_temp.append(poster_url)
         serie_temp.append(release_date)
         serie_temp.append(genres)
         serie_temp.append(overview)
-
+        serie_temp.append(False)
         series_list.append(serie_temp)
 
     return series_list
@@ -502,6 +548,10 @@ def get_movies_search(movies):
     for movie in movies:
 
         movie_temp = []
+        if movie.find("id").text is not None:
+            id = movie.find("id").text
+        else:
+            id = "Undefined"
         if movie.find("poster_path").text is not None:
             poster_url = IMAGES_SITE + movie.find("poster_path").text
         else:
@@ -526,6 +576,7 @@ def get_movies_search(movies):
         else:
             overview = "Undefined"
 
+        movie_temp.append(id)
         movie_temp.append(movie.find("original_title").text)
         movie_temp.append(movie.find("vote_average").text)
         movie_temp.append(poster_url)
@@ -533,7 +584,7 @@ def get_movies_search(movies):
         movie_temp.append(release_date)
         movie_temp.append(genres)
         movie_temp.append(overview)
-
+        movie_temp.append(True)
         movies_list.append(movie_temp)
 
     return movies_list

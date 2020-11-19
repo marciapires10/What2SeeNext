@@ -66,11 +66,20 @@ function ShowGenre(){
   document.getElementById("dropgenre").classList.toggle("show");
 }
 
-window.onclick = function(e){
-  if(!e.target.matches('.dropbtn')) {
+window.onclick = function(e) {
+  if (!e.target.matches('.dropbtn')) {
     var dropgenre = document.getElementById("dropgenre");
-    if(dropgenre.classList.contains('show')){
+    if (dropgenre.classList.contains('show')) {
       dropgenre.classList.remove('show');
     }
   }
 }
+
+
+function editReview(id) {
+  document.getElementById(id).contentEditable = true;
+}
+function updateReview(id) {
+	document.getElementById(id).contentEditable = false;
+}
+

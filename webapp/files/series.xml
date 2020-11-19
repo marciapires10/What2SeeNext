@@ -1,5 +1,4 @@
 <?xml version='1.0' encoding='UTF-8'?>
-<?xml-stylesheet type="text/slt" href="series-list.xsl"?>
 <root xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="series.xsd">
   <serie>
 	<backdrop_path>/giYjUX9Peu7mGvYB1YEBuYjxLJ9.jpg</backdrop_path>
