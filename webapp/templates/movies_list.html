@@ -7,9 +7,11 @@
                     <div class="col-lg-10" style="padding-top: 60px; padding-bottom: 10px;">
                         <div class="check-movies">
                             <h3 style="color: white; text-align: left;">Genre</h3>
+                            <form action="." method="post">
+                            {% csrf_token %}
                             <table style="color: white">
                                 <tr>
-                                <form action="." method="post">
+
                                     <input type="checkbox" id="all-movies" name="all-movies">
                                     <label for="all-movies" style="color: white"><br>All</label>
                                     {% for g in movie_genres %}
@@ -18,13 +20,27 @@
                                             {{ g }}
                                         </td>
                                     {% endfor %}
-                                {% csrf_token %}
+
                                 <td>
                                     <input type="submit" id="submit" name="filter" value="Filter">
                                 </td>
-                                </form>
+
                                 </tr>
                             </table>
+                        <div class="dropdown" onclick="ShowGenre()">
+                            <button type="button" class="dropbtn">Order By<i class="fa fa-caret-down"> </i></>
+                            <div class="dropdown-content" id="dropgenre">
+                                <table>
+                                    <tr>
+                                        <input type="submit" id="Average" name="order" value="Average"/>
+                                        <input type="submit" id="Popularity" name="order" value="Popularity"/>
+                                        <input type="submit" id="Title" name="order" value="Alphabetic"/>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                        </form>
                         </div>
                     </div>
                     <div class="col-lg-10" style="padding-top: 40px; padding-bottom: 20px; display: flex; justify-content: center;">

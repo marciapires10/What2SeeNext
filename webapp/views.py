@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 import requests
 import lxml.etree as ET
 from BaseXClient import BaseXClient
-from EDC_Project.settings import BASE_DIR
+from Project.settings import BASE_DIR
 import os
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
@@ -17,6 +17,12 @@ QUERY_MOVIE_GENRES = "import module namespace funcs = \"com.funcs.catalog\"; fun
 QUERY_SERIE_GENRES = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-sgenres()"
 QUERY_SBY_GENRE = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-genre-series({})"
 QUERY_MBY_GENRE = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-genre-movies({})"
+QUERY_MORDER_GENRE = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-all-movies-ordered-genre({},{})"
+QUERY_MORDER = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-all-movies-ordered({})"
+QUERY_SORDER_GENRE = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-all-series-ordered-genre({},{})"
+QUERY_SORDER = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-all-series-ordered({})"
+
+
 
 NO_IMAGE = "../static/assets/img/NoImage.jpg"
 
@@ -44,7 +50,6 @@ def get_top_rated_movies():
         movie_temp.append(movie.find("vote_average").text)
         movie_temp.append(poster_url)
         movie_temp.append(movie_id)
-        print(movie_id)
         movies_list.append(movie_temp)
 
     return movies_list
@@ -122,6 +127,7 @@ def index(request):
 
     return render(request, 'index.html', t_params)
 
+
 def get_movie_genres():
     # create query instance
     result = session.query(QUERY_MOVIE_GENRES).execute()
@@ -131,23 +137,47 @@ def get_movie_genres():
     return mgenres
 
 def movies(request, filter = None, order = None):
-
-    if 'filter' in request.POST and filter is None and request.POST.get('checkbox'):
+    if filter is None and request.POST.get('checkbox'):
         myDict = dict(request.POST.lists())
         _filter = myDict['checkbox']
-        return movies(request, _filter)
-    elif 'filter' in request.POST and request.POST.get('checkbox'):
-        query = session.query(QUERY_MBY_GENRE.format(str(filter))).execute()
-        tree = etree.XML(query)
+        if 'order' in myDict:
+            _order = myDict['order'][0]
+        else:
+            _order = None
+        return movies(request, _filter, _order)
+
+    elif request.POST.get('checkbox'):
+        if request.POST.get('order'):
+            if order == "Average":
+                query = session.query(QUERY_MORDER_GENRE.format(str(filter), 1)).execute()
+            elif order == "Popularity":
+                query = session.query(QUERY_MORDER_GENRE.format(str(filter), 2)).execute()
+            else:
+                query = session.query(QUERY_MORDER_GENRE.format(str(filter), 3)).execute()
+            print(query)
+            tree = etree.XML(query)
+        else:
+            query = session.query(QUERY_MBY_GENRE.format(str(filter))).execute()
+            tree = etree.XML(query)
     else:
-        pxml = 'movies.xml'
-        fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
-        tree = ET.parse(fxml)
+        if request.POST.get('order'):
+            myDict = dict(request.POST.lists())
+            order = myDict['order'][0]
+            if order == "Average":
+                query = session.query(QUERY_MORDER.format(1)).execute()
+            elif order == "Popularity":
+                query = session.query(QUERY_MORDER.format(2)).execute()
+            else:
+                query = session.query(QUERY_MORDER.format(3)).execute()
+            tree = etree.XML(query)
+        else:
+            pxml = 'movies.xml'
+            fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
+            tree = ET.parse(fxml)
 
     if 'search' in request.POST:
-        str = request.POST.get('search', '')
-        print(str)
-        return HttpResponseRedirect('/search_results/' + str)
+        search_str = request.POST.get('search', '')
+        return HttpResponseRedirect('/search_results/' + search_str)
 
     pxslt = 'movies-list.xsl'
     fxslt = os.path.join(BASE_DIR, 'webapp/files/' + pxslt)
@@ -175,18 +205,43 @@ def get_series_genres():
 
 
 def series(request , filter = None, order = None):
-
-    if 'filter' in request.POST and filter is None and request.POST.get('checkbox'):
+    if filter is None and request.POST.get('checkbox'):
         myDict = dict(request.POST.lists())
         _filter = myDict['checkbox']
-        return series(request, _filter)
-    elif 'filter' in request.POST and request.POST.get('checkbox'):
-        query = session.query(QUERY_SBY_GENRE.format(str(filter))).execute()
-        tree = etree.XML(query)
+        if 'order' in myDict:
+            _order = myDict['order'][0]
+        else:
+            _order = None
+        return series(request, _filter, _order)
+
+    elif request.POST.get('checkbox'):
+        if request.POST.get('order'):
+            if order == "Average":
+                query = session.query(QUERY_SORDER_GENRE.format(str(filter), 1)).execute()
+            elif order == "Popularity":
+                query = session.query(QUERY_SORDER_GENRE.format(str(filter), 2)).execute()
+            else:
+                query = session.query(QUERY_SORDER_GENRE.format(str(filter), 3)).execute()
+            print(query)
+            tree = etree.XML(query)
+        else:
+            query = session.query(QUERY_SBY_GENRE.format(str(filter))).execute()
+            tree = etree.XML(query)
     else:
-        pxml = 'series.xml'
-        fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
-        tree = ET.parse(fxml)
+        if request.POST.get('order'):
+            myDict = dict(request.POST.lists())
+            order = myDict['order'][0]
+            if order == "Average":
+                query = session.query(QUERY_SORDER.format(1)).execute()
+            elif order == "Popularity":
+                query = session.query(QUERY_SORDER.format(2)).execute()
+            else:
+                query = session.query(QUERY_SORDER.format(3)).execute()
+            tree = etree.XML(query)
+        else:
+            pxml = 'series.xml'
+            fxml = os.path.join(BASE_DIR, 'webapp/files/' + pxml)
+            tree = ET.parse(fxml)
 
 
     pxslt = 'series-list.xsl'
@@ -221,9 +276,9 @@ def detail_info(request, id):
                 original_title = item.text
             else:
                 original_title = "Undefined"
-        if item.tag == ''
-        print(item.tag)
-
+        if item.tag == '':
+            print(item.tag)
+    info_movies = ""                # eliminar
 
 
     # info to list: <original_title> (<title>), <genres>, <release_date>, <runtime>, <spoken_languages>, <production_companies>, <poster_path>,
@@ -297,6 +352,7 @@ def get_search_results(request, str):
         print(str)
         return HttpResponseRedirect('/search_results/' + str)
     # create query instance
+    # titulo, rating, poster, duracao, data, generos, resumo
 
     query_m = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-search-movies('" + str + "')"
     query_s = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-search-series('" + str + "')"
@@ -403,7 +459,5 @@ def get_movies_search(movies):
         movie_temp.append(overview)
 
         movies_list.append(movie_temp)
-
-        print(movies_list)
 
     return movies_list
