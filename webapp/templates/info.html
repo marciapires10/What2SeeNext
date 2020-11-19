@@ -14,25 +14,21 @@
             <div class="container" id="movie-info-container">
                 <div class="container" id="poster-container">
                     <img class="img-fluid" src="{{ poster }}" alt="" id="poster"/>
+                    <h4 style="padding-top: 30px; color: white"><b>IMDb Rating: </b>{{ voteavg }} <i class="fas fa-star" style="color:#c69500;"></i></h4>
                 </div>
                 <div class="container" style="color: white;" id="movie-text-info">
-                    <h4><b>{{ title }}</b></h4>
+                    <h5><b>Release Date: </b>{{ date }}</h5>
                     <p></p>
-                    <h5><b>Release Date: </b><h5>{{ date }}</h5></h5>
+                    <h5><b>Runtime: </b>{{ runtime }}<b style="padding-left: 40px">Status: </b>{{ status }}</h5>
+                    <p style="padding-bottom: 10px"></p>
+                    <h5><b>Genres: </b>{{ genres }}</h5>
+                    <p style="padding-bottom: 30px"></p>
+                    <h5><b>Main Stars: </b><h5>{{ cast }} and more</h5></h5>
                     <p></p>
-                    <h5><b>Runtime: </b><h5>{{ runtime }}</h5></h5>
+                    <h5><b>Staff: </b><h5>{{ crew }}</h5></h5>
                     <p></p>
-                    <h5><b>Status: </b><h5>{{ status }}</h5></h5>
-                    <p></p>
-                    <h5><b>Genres: </b><h5>{{ genres }}</h5></h5>
-                    <p></p>
-                    <h5><b>Stars:</b><h5>{{ cast }}</h5></h5>
-                    <p></p>
-                    <h5><b>Staff:</b><h5>{{ crew }}</h5></h5>
-                    <p></p>
-                    <h6><b>Overview:</b><h6>{{ overv }}</h6></h6>
-                    <p></p>
-                    <h6><b>IMDB Rating:</b><h6>{{ voteavg }}</h6></h6>
+                    <p style="padding-bottom: 20px"></p>
+                    <h5 style="overflow: auto; height: 130px;"><b>Overview: </b>{{ overv }}</h5>
                     <p></p>
                 </div>
             </div>

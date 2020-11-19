@@ -9,36 +9,85 @@
                             <h3 style="color: white; text-align: left;">Genre</h3>
                             <form action="." method="post">
                             {% csrf_token %}
+                            <input type="checkbox" id="all-movies" name="all-movies">
+                                <label for="all-movies" style="color: white"><br>All</label>
                             <table style="color: white">
                                 <tr>
-
-                                    <input type="checkbox" id="all-movies" name="all-movies">
-                                    <label for="all-movies" style="color: white"><br>All</label>
                                     {% for g in movie_genres %}
-                                        <td>
-                                            <input type="checkbox" id={{ g }} name="checkbox" value="{{ g }}" class="chkvalues">
-                                            {{ g }}
-                                        </td>
+                                        {% if forloop.counter0 <= 3 %}
+                                            <td style="color:white;">
+                                                <input type="checkbox" id={{ g }} name="checkbox" value="{{ g }}" class="chkvalues">
+                                                {{ g }}
+                                            </td>
+                                        {% endif %}
+                                        {% if forloop.counter0 > 3 %}
+                                            {% if forloop.counter0 <= 7 %}
+                                                <td style="color:white;">
+                                                    <input type="checkbox" id={{ g }} name="checkbox" value="{{ g }}" class="chkvalues">
+                                                        {{ g }}
+                                                </td>
+                                                <tr></tr>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if forloop.counter0 > 7 %}
+                                            {% if forloop.counter0 <= 11 %}
+                                                <td style="color:white;">
+                                                    <input type="checkbox" id={{ g }} name="checkbox" value="{{ g }}" class="chkvalues">
+                                                        {{ g }}
+                                                </td>
+                                                <tr></tr>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if forloop.counter0 > 11 %}
+                                            {% if forloop.counter0 <= 15 %}
+                                                <td style="color:white;">
+                                                    <input type="checkbox" id={{ g }} name="checkbox" value="{{ g }}" class="chkvalues">
+                                                        {{ g }}
+                                                </td>
+                                                <tr></tr>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if forloop.counter0 > 15 %}
+                                            {% if forloop.counter0 <= 19 %}
+                                                <td style="color:white;">
+                                                    <input type="checkbox" id={{ g }} name="checkbox" value="{{ g }}" class="chkvalues">
+                                                        {{ g }}
+                                                </td>
+                                                <tr></tr>
+                                            {% endif %}
+                                        {% endif %}
+                                        {% if forloop.counter0 > 19 %}
+                                            {% if forloop.counter0 <= 23 %}
+                                                <td style="color:white;">
+                                                    <input type="checkbox" id={{ g }} name="checkbox" value="{{ g }}" class="chkvalues">
+                                                        {{ g }}
+                                                </td>
+                                                <tr></tr>
+                                            {% endif %}
+                                        {% endif %}
                                     {% endfor %}
+                                </tr>
 
                                 <td>
                                     <input type="submit" id="submit" class="btn btn-primary" name="filter" value="Filter">
                                 </td>
 
-                                </tr>
+
                             </table>
                         <div class="dropdown" onclick="ShowGenre()">
                             <button type="button" class="dropbtn">Order by <i class="fa fa-caret-down"> </i></button>
                             <div class="dropdown-content" id="dropgenre">
                                 <table>
                                     <tr>
-                                        <input type="submit" id="Average" name="order" value="Average"/>
-                                    </tr>
-                                    <tr>
-                                        <input type="submit" id="Popularity" name="order" value="Popularity"/>
-                                    </tr>
-                                    <tr>
-                                        <input type="submit" id="Title" name="order" value="Alphabetic"/>
+                                        <td>
+                                            <tr><input style="background-color: inherit; color: white; border: none; padding: 10px;" type="submit" id="Average" name="order" value="Average"/></tr><br/>
+                                        </td>
+                                        <td>
+                                            <tr><input style="background-color: inherit; color: white; border: none; padding: 10px;" type="submit" id="Popularity" name="order" value="Popularity"/></tr><br/>
+                                        </td>
+                                        <td>
+                                            <tr><input style="background-color: inherit; color: white; border: none; padding: 10px;" type="submit" id="Title" name="order" value="A-Z"/></tr><br/>
+                                        </td>
                                     </tr>
                                 </table>
                             </div>

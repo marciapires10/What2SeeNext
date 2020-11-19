@@ -38,7 +38,7 @@
                                             <img class="card-img-top" src={{ poster }}>
                                             <div class="card-body">
                                                 <h4 style="font-size: 1rem;" class="card-title">{{ title }}</h4>
-                                                <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="far fa-star"></i></b></p>
+                                                <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="fas fa-star" style="color: #c69500"></i></b></p>
                                             </div>
                                             <form method="post">
                                                 {% csrf_token %}
@@ -61,7 +61,7 @@
                                             <img class="card-img-top" src={{ poster }}>
                                             <div class="card-body">
                                                 <h4 style="font-size: 1rem;" class="card-title">{{ title }}</h4>
-                                                <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="far fa-star"></i></b></p>
+                                                <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="fas fa-star" style="color: #c69500"></i></b></p>
                                             </div>
                                             <form method="post">
                                                 {% csrf_token %}
@@ -85,7 +85,7 @@
                                                 <img class="card-img-top" src={{ poster }}>
                                                 <div class="card-body">
                                                     <h4 style="font-size: 1rem;" class="card-title">{{ title }}</h4>
-                                                    <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="far fa-star"></i></b></p>
+                                                    <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="fas fa-star" style="color: #c69500"></i></b></p>
                                                 </div>
                                                 <form method="post">
                                                     {% csrf_token %}
@@ -109,7 +109,7 @@
                                                 <img class="card-img-top" src={{ poster }}>
                                                 <div class="card-body">
                                                     <h4 style="font-size: 1rem;" class="card-title">{{ title }}</h4>
-                                                    <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="far fa-star"></i></b></p>
+                                                    <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="fas fa-star" style="color: #c69500"></i></b></p>
                                                 </div>
                                                 <form method="post">
                                                     {% csrf_token %}
@@ -168,7 +168,7 @@
                                             <img class="card-img-top" src={{ poster }}>
                                             <div class="card-body">
                                                 <h4 style="font-size: 1rem;" class="card-title">{{ title }}</h4>
-                                                <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="far fa-star"></i></b></p>
+                                                <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="fas fa-star" style="color:#c69500;"></i></b></p>
                                             </div>
                                             <form method="post">
                                                 {% csrf_token %}
@@ -191,7 +191,7 @@
                                             <img class="card-img-top" src={{ poster }}>
                                             <div class="card-body">
                                                 <h4 style="font-size: 1rem;" class="card-title">{{ title }}</h4>
-                                                <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="far fa-star"></i></b></p>
+                                                <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="fas fa-star" style="color:#c69500;"></i></b></p>
                                             </div>
                                             <form method="post">
                                                 {% csrf_token %}
@@ -215,7 +215,7 @@
                                                 <img class="card-img-top" src={{ poster }}>
                                                 <div class="card-body">
                                                     <h4 style="font-size: 1rem;" class="card-title">{{ title }}</h4>
-                                                    <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="far fa-star"></i></b></p>
+                                                    <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="fas fa-star" style="color:#c69500;"></i></b></p>
                                                 </div>
                                                 <form method="post">
                                                     {% csrf_token %}
@@ -239,7 +239,7 @@
                                                 <img class="card-img-top" src={{ poster }}>
                                                 <div class="card-body">
                                                     <h4 style="font-size: 1rem;" class="card-title">{{ title }}</h4>
-                                                    <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="far fa-star"></i></b></p>
+                                                    <p class="card-text" style="font-size: 1.5rem;"><b>{{ rating }}   <i class="fas fa-star" style="color:#c69500;"></i></b></p>
                                                 </div>
                                                 <form method="post">
                                                     {% csrf_token %}
@@ -281,21 +281,24 @@
             <ol class="carousel-indicators1">
                 <li data-target="#news_list" data-slide-to="0" class="active"></li>
                 <li data-target="#news_list" data-slide-to="1"></li>
+                <li data-target="#news_list" data-slide-to="2"></li>
             </ol>
 
             <div class="carousel-content" role="listbox">
                 <div class="carousel-item active">
                     <div class="row">
-                        {% for title, descr, url, source in news %}
+                        {% for title, descr, url, source, pubDate in news %}
                             {% if forloop.counter0 <= 3 %}
                                 <div class="col-lg-3 col-md-6 text-center">
                                     <div class="mt-5">
                                         <img class="img-fluid" src={{ url }} alt="" />
                                         <p></p>
                                         <a href={{ source }}>
-                                        <h3 class="h4 mb-2" style="text-align: justify;">{{ title }}</h3>
+                                        <h3 class="h4 mb-2" style="text-align: left;">{{ title }}</h3>
                                         </a>
-                                        <p class="text-muted mb-0" style="text-align: justify;">{{ descr }}</p>
+                                        <p class="text-muted mb-0" style="text-align: left;">{{ descr }}</p>
+                                        <p></p>
+                                        <p style="font-size: 0.8rem; text-align: left">[{{ pubDate }}]</p>
                                     </div>
                                 </div>
                             {% endif %}
@@ -304,19 +307,21 @@
                 </div>
                 <div class="carousel-item">
                     <div class="row">
-                        {% for title, descr, url, source in news %}
+                        {% for title, descr, url, source, pubDate in news %}
                             {% if forloop.counter0 > 3 %}
                                 {% if forloop.counter0 <= 7 %}
-                                <div class="col-lg-3 col-md-6 text-center">
-                                    <div class="mt-5">
-                                        <img class="img-fluid" src={{ url }} alt="" />
-                                        <p></p>
-                                        <a href={{ source }}>
-                                        <h3 class="h4 mb-2" style="text-align: justify;">{{ title }}</h3>
-                                        </a>
-                                        <p class="text-muted mb-0" style="text-align: justify;">{{ descr }}</p>
+                                    <div class="col-lg-3 col-md-6 text-center">
+                                        <div class="mt-5">
+                                            <img class="img-fluid" src={{ url }} alt="" />
+                                            <p></p>
+                                            <a href={{ source }}>
+                                            <h3 class="h4 mb-2" style="text-align: left;">{{ title }}</h3>
+                                            </a>
+                                            <p class="text-muted mb-0" style="text-align: left;">{{ descr }}</p>
+                                            <p></p>
+                                            <p style="font-size: 0.8rem; text-align: left">[{{ pubDate }}]</p>
+                                        </div>
                                     </div>
-                                </div>
                                     {% endif %}
                             {% endif %}
                         {% endfor %}
@@ -324,7 +329,7 @@
                 </div>
                 <div class="carousel-item">
                     <div class="row">
-                        {% for title, descr, url, source in news %}
+                        {% for title, descr, url, source, pubDate in news %}
                             {% if forloop.counter0 > 7 %}
                                 {% if forloop.counter0 <= 11 %}
                                 <div class="col-lg-3 col-md-6 text-center">
@@ -332,9 +337,11 @@
                                         <img class="img-fluid" src={{ url }} alt="" />
                                         <p></p>
                                         <a href={{ source }}>
-                                        <h3 class="h4 mb-2" style="text-align: justify;">{{ title }}</h3>
+                                        <h3 class="h4 mb-2" style="text-align: left;">{{ title }}</h3>
                                         </a>
-                                        <p class="text-muted mb-0" style="text-align: justify;">{{ descr }}</p>
+                                        <p class="text-muted mb-0" style="text-align: left;">{{ descr }}</p>
+                                        <p></p>
+                                        <p style="font-size: 0.8rem; text-align: left">[{{ pubDate }}]</p>
                                     </div>
                                 </div>
                                     {% endif %}

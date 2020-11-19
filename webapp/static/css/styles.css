@@ -4468,8 +4468,8 @@ tr.space > td{
 #more-movie-all{
   opacity: 0;
   transition: opacity 0.35s ease;
-  position: absolute;
   margin-left: -50px;
+  margin-top: 150px;
 }
 
 #full-card:hover #more-movie, #full-card-all:hover #more-movie-all{
@@ -10344,7 +10344,7 @@ header.masthead h1 {
 }
 
 .container #poster-container{
-  width: 50%;
+  width: 40%;
   display: block;
   float: left;
   padding-right: 0px;
@@ -10421,4 +10421,8 @@ header.masthead h1 {
 
 #top-series{
   height: 100vh;
+}
+
+#Title input[type="submit"]:hover{
+  color: white; !important;
 }

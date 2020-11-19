@@ -2,7 +2,7 @@ module namespace funcs = "com.funcs.catalog";
 
 declare function funcs:top-movies() {
   <movies>{
-  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
   order by $a/vote_average/text()/xs:double(.) descending
   return (
     <movie>{
@@ -19,7 +19,7 @@ declare function funcs:top-movies() {
 };
 declare function funcs:top-series() {
   <series>{
-  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
   order by $a/vote_average/text()/xs:double(.) descending
   return (
     <serie>{
@@ -36,7 +36,7 @@ declare function funcs:top-series() {
 };
 declare function funcs:get-mgenres() {
   <genres>{
-  let $a := doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+  let $a := doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
   for $b in distinct-values($a/genres/item/name)
   order by $b
   return <genre>{$b}</genre>
@@ -44,7 +44,7 @@ declare function funcs:get-mgenres() {
 };
 declare function funcs:get-sgenres() {
   <genres>{
-  let $a := doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+  let $a := doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
   for $b in distinct-values($a/genres/item/name)
   order by $b
   return <genre>{$b}</genre>
@@ -52,7 +52,7 @@ declare function funcs:get-sgenres() {
 };
 declare function funcs:get-genre-movies($g) {
   <movies>{
-  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
   where ((for $g_item in $g return $g_item = $a/genres/item/name) = true())
   return (
     <movie>{
@@ -67,7 +67,7 @@ declare function funcs:get-genre-movies($g) {
 
 declare function funcs:get-genre-series($g) {
   <series>{
-  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
   where ((for $g_item in $g return $g_item = $a/genres/item/name) = true())
   return (
     <serie>{
@@ -82,45 +82,45 @@ declare function funcs:get-genre-series($g) {
 
 declare function funcs:get-search-movies($s) {
    <movies>{
-        for $m in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+        for $m in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
         where contains(lower-case($m/original_title), lower-case($s))
         return $m
    }</movies>
 };
 declare function funcs:get-search-series($s) {
    <series>{
-        for $m in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+        for $m in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
         where contains(lower-case($m/name), lower-case($s))
         return $m
    }</series>
 };
 declare function funcs:get-search-persons($s) {
    <items>{
-        for $mid in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/casts.xml")//cast
+        for $mid in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/casts.xml")//cast
         where $mid/cast/item/original_name = $s
         return (
-        for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+        for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
           where $a/id = $mid/id
           return $a
         ),
-        for $mid in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/casts.xml")//cast
+        for $mid in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/asts.xml")//cast
         where $mid/crew/item/original_name = $s
         return (
-        for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+        for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
           where $a/id = $mid/id
           return $a
         ),
-        for $mid in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/scredits.xml")//cast
+        for $mid in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/scredits.xml")//cast
         where $mid/cast/item/original_name = $s
         return (
-        for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+        for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
           where $a/id = $mid/id
           return $a
         ),
-        for $mid in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/scredits.xml")//cast
+        for $mid in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/scredits.xml")//cast
         where $mid/crew/item/original_name = $s
         return (
-        for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+        for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
           where $a/id = $mid/id
           return $a
         )
@@ -168,17 +168,17 @@ declare function funcs:get-all-movies-ordered-genre($g, $i){
 declare function funcs:get-all-movies-ordered($i){
   <movies>{
   if ($i = 1) then (
-  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
   order by $a/vote_average/text()/xs:double(.) descending
   return $a
   )
   else if ($i = 2) then (
-  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
   order by $a/popularity/text()/xs:double(.) descending
     return $a
   )
   else if ($i =3) then (
-  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
   order by $a/original_title/text()/xs:string(.)
   return $a
   )
@@ -188,17 +188,17 @@ declare function funcs:get-all-movies-ordered($i){
 declare function funcs:get-all-series-ordered($i){
   <series>{
   if ($i = 1) then (
-  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
   order by $a/vote_average/text()/xs:double(.) descending
   return $a
   )
   else if ($i = 2) then (
-  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
   order by $a/popularity/text()/xs:double(.) descending
     return $a
   )
   else if ($i =3) then (
-  for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+  for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
   order by $a/name/text()/xs:string(.)
   return $a
   )
@@ -206,7 +206,7 @@ declare function funcs:get-all-series-ordered($i){
 };
 declare function funcs:get-fullinfo($id) {
     <movie>{
-        for $b in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/movies.xml")//movie
+        for $b in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/movies.xml")//movie
         where $b/id = $id
         return (
           $b/id,
@@ -222,7 +222,7 @@ declare function funcs:get-fullinfo($id) {
           $b/overview,
           for $c in $b/production_companies/item/name
           return <prod_companie>{$c/text()}</prod_companie>,
-          for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/casts.xml")//cast
+          for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/casts.xml")//cast
             where $a/id = $id
             return (
                 <credit>{
@@ -254,7 +254,7 @@ declare function funcs:get-fullinfo($id) {
 };
 declare function funcs:get-fullserieinfo($id) {
   <serie>{
-  for $b in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/series.xml")//serie
+  for $b in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/series.xml")//serie
   where $b/id = $id
   return (
       $b/id,
@@ -274,7 +274,7 @@ declare function funcs:get-fullserieinfo($id) {
       return <network>{$net/name/text()}</network>,
       for $com in $b/production_companies/item
       return <companie>{$com/name/text()}</companie>,
-      for $a in doc("/home/tomasfilipe7/Desktop/Universidade/EDC/Project/webapp/files/scredits.xml")//cast
+      for $a in doc("/home/marciapires/Desktop/Universidade/4Ano/EDC/EDC_Project/webapp/files/scredits.xml")//cast
       where $a/id = $id
       return (
           <credit>{

@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 import requests
 import lxml.etree as ET
 from BaseXClient import BaseXClient
-from Project.settings import BASE_DIR
+from EDC_Project.settings import BASE_DIR
 import os
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
@@ -103,6 +103,9 @@ def get_rss():
                 movie.append(str(item.find("enclosure").get('url')))
             if item.find("guid") is not None:
                 movie.append(item.find("guid").text)
+            if item.find("pubDate") is not None:
+                movie.append(item.find("pubDate").text)
+
             movies.append(movie)
 
     return movies
@@ -357,9 +360,9 @@ def detail_info(request, id):
                 for cast in item.find("cast"):
                     if cast.find("character").text is not None and cast.find("original_name").text is not None:
                         if cast_is_found:
-                            cast_str +=", " + cast.find("original_name").text + " (" + cast.find("character").text + ")"
+                            cast_str +=", " + cast.find("original_name").text + " (as " + cast.find("character").text + ")"
                         else:
-                            cast_str += cast.find("original_name").text + " (" + cast.find("character").text + ")"
+                            cast_str += cast.find("original_name").text + " (as " + cast.find("character").text + ")"
                             cast_is_found = True
                         count += 1
                     if count >= 5:
