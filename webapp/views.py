@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 import requests
 import lxml.etree as ET
 from BaseXClient import BaseXClient
-from Project.settings import BASE_DIR
+from EDC_Project.settings import BASE_DIR
 import os
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
@@ -107,6 +107,14 @@ def index(request):
     top_movies = get_top_rated_movies()
     top_series = get_top_rated_series()
     news = get_rss()
+
+    if 'info-m' in request.POST:
+        id = request.POST.get('info-m')
+        print(id)
+        detail_info(request, id)
+        return HttpResponseRedirect('/info/' + id)
+
+
     t_params = {'news': news,
                 'top_movies': top_movies,
                 'top_series': top_series
@@ -197,12 +205,75 @@ def series(request , filter = None, order = None):
 
     return render(request, 'series_list.html', tparams)
 
-def detail_info(request):
+def detail_info(request, id):
+    # create query instance
+    query = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-fullinfo('" + id + "')"
+    result = session.query(query).execute()
+    print(result)
+    tree = etree.XML(result)
+
+    info_list = []
+    for item in tree:
+        info_tmp = []
+
+        if item.tag == 'original_title':
+            if item.text is not None:
+                original_title = item.text
+            else:
+                original_title = "Undefined"
+        if item.tag == ''
+        print(item.tag)
+
+
+
+    # info to list: <original_title> (<title>), <genres>, <release_date>, <runtime>, <spoken_languages>, <production_companies>, <poster_path>,
+    # <adult>, <overview>, <vote_average>
+
+    for i in info_movies:
+        info_tmp = []
+        if i.find('poster_path').text is not None:
+            poster_url = IMAGES_SITE + i.find('poster_path').text
+        else:
+            poster_url = NO_IMAGE
+
+        if i.find('runtime').text is not None:
+            runtime = i.find('runtime').text
+        else:
+            runtime = "Undefined"
+
+        if i.find('release_date').text is not None:
+            release_date = i.find('release_date').text
+        else:
+            release_date = "Undefined"
+
+        if i.find('genres//item') is not None and i.find('genres//item/name') is not None:
+            genres = ""
+            for item in i.find('genres'):
+                genres += "[" + item.find('name').text + "]"
+        else:
+            genres = "Undefined"
+
+        if i.find('overview').text is not None:
+            overview = i.find('overview').text
+        else:
+            overview = "Undefined"
+
+        info_tmp.append(i.find('original_title').text)
+        info_tmp.append(i.find('vote_average').text)
+        info_tmp.append(poster_url)
+        info_tmp.append(runtime)
+        info_tmp.append(release_date)
+        info_tmp.append(genres)
+        info_tmp.append(overview)
+
+        info_list.append(info_tmp)
+        print(info_list)
 
     m_review = movie_review()
 
     tparams = {
-        'html_review': m_review
+        'html_review': m_review,
+        'result': info_list,
     }
 
     return render(request, 'info.html', tparams)
@@ -226,7 +297,6 @@ def get_search_results(request, str):
         print(str)
         return HttpResponseRedirect('/search_results/' + str)
     # create query instance
-    # titulo, rating, poster, duracao, data, generos, resumo
 
     query_m = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-search-movies('" + str + "')"
     query_s = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-search-series('" + str + "')"
@@ -333,5 +403,7 @@ def get_movies_search(movies):
         movie_temp.append(overview)
 
         movies_list.append(movie_temp)
+
+        print(movies_list)
 
     return movies_list

@@ -23,16 +23,23 @@
                                             "card-img-all"
                                         </xsl:attribute>
                                     </img>
-                                    <div class="overlay"/>
-                                    <a class="btn btn-primary">
-                                        <xsl:attribute name="id">
-                                            "more-movie-all"
-                                        </xsl:attribute>
-                                        <xsl:attribute name="name">
-                                            <xsl:value-of select="id"/>
-                                        </xsl:attribute>
-                                        See more
-                                    </a>
+                                    <form method="post">
+                                        {% csrf_token %}
+                                        <div class="overlay">
+                                            <xsl:attribute name="alt">
+                                                <xsl:value-of select="original_title"/>
+                                            </xsl:attribute>
+                                            <xsl:attribute name="title">
+                                                <xsl:value-of select="original_title"/>
+                                            </xsl:attribute>
+                                        </div>
+                                        <button type="submit" name="info-m" class="btn btn-primary" id="more-movie-all">
+                                            <xsl:attribute name="value">
+                                                <xsl:value-of select="id"/>
+                                            </xsl:attribute>
+                                            See more
+                                        </button>
+                                    </form>
                                 </div>
                             </div>
                         </td>
@@ -45,26 +52,33 @@
                                             <xsl:attribute name="src">
                                                 http://image.tmdb.org/t/p/w200<xsl:value-of select="poster_path"/>
                                             </xsl:attribute>
+                                            <xsl:attribute name="alt">"
+                                                <xsl:value-of select="original_title"/>"
+                                            </xsl:attribute>
+                                            <xsl:attribute name="title">"
+                                                <xsl:value-of select="original_title"/>"
+                                            </xsl:attribute>
+                                            <xsl:attribute name="id">
+                                                "card-img-all"
+                                            </xsl:attribute>
+                                        </img>
+                                        <form method="post">
+                                        {% csrf_token %}
+                                        <div class="overlay">
                                             <xsl:attribute name="alt">
                                                 <xsl:value-of select="original_title"/>
                                             </xsl:attribute>
                                             <xsl:attribute name="title">
                                                 <xsl:value-of select="original_title"/>
                                             </xsl:attribute>
-                                            <xsl:attribute name="id">
-                                                "card-img-all"
+                                        </div>
+                                        <button type="submit" name="info-m" class="btn btn-primary" id="more-movie-all">
+                                            <xsl:attribute name="value">
+                                                <xsl:value-of select="id"/>
                                             </xsl:attribute>
-                                        </img>
-                                        <div class="overlay"/>
-                                    <a class="btn btn-primary">
-                                        <xsl:attribute name="id">
-                                            "more-movie-all"
-                                        </xsl:attribute>
-                                        <xsl:attribute name="name">
-                                            <xsl:value-of select="id"/>
-                                        </xsl:attribute>
-                                        See more
-                                    </a>
+                                            See more
+                                        </button>
+                                    </form>
                                 </div>
                                 </div>
                             </td>
