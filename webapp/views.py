@@ -264,10 +264,13 @@ def detail_info(request, id):
     # create query instance
     query = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-fullinfo('" + id + "')"
     result = session.query(query).execute()
-    print(result)
+    #print(result)
     tree = etree.XML(result)
 
     info_list = []
+    genres = ""
+    cast_str = ""
+    crew_str = ""
     for item in tree:
         info_tmp = []
 
@@ -276,58 +279,65 @@ def detail_info(request, id):
                 original_title = item.text
             else:
                 original_title = "Undefined"
-        if item.tag == '':
-            print(item.tag)
-    info_movies = ""                # eliminar
+        if item.tag == "poster_path":
+            if item.text is not None:
+                poster_url = IMAGES_SITE + item.text
+            else:
+                poster_url = NO_IMAGE
+        if item.tag == "vote_average":
+            if item.text is not None:
+                vote_average = item.text
+            else:
+                vote_average = "Undefined"
+        if item.tag == "runtime":
+            if item.text is not None:
+                runtime = item.text
+            else:
+                runtime = "Undefined"
+        if item.tag == "release_date":
+            if item.text is not None:
+                release_date = item.text
+            else:
+                release_date = "Undefined"
+        if item.tag == "genre":
+            if item.text is not None:
+                genres += "[" + item.text + "] "
+        if item.tag == "overview":
+            if item.text is not None:
+                overview = item.text
+            else:
+                overview = "Undefined"
+        if item.tag == "credit":
+            count = 0
+            for cast in item.find("cast"):
+                if cast.find("character").text is not None and cast.find("original_name").text is not None:
+                    cast_str += cast.find("original_name").text + " (" + cast.find("character").text + ") ,"
+                    count += 1
+                if count >= 5:
+                    break
+            for crew in item.find("crew"):
+                if crew.tag == "original_name":
+                    if crew.text is not None:
+                        crew_str += crew.text
+                if crew.tag == "job":
+                    if crew.text is not None:
+                        crew_str += " (" + crew.text + ") ,"
 
+    info_tmp.append(original_title)
+    info_tmp.append(poster_url)
+    info_tmp.append(vote_average)
+    info_tmp.append(runtime)
+    info_tmp.append(release_date)
+    info_tmp.append(genres)
+    info_tmp.append(overview)
+    info_tmp.append(cast_str)
+    info_tmp.append(crew_str)
+    info_list.append(info_tmp)
 
-    # info to list: <original_title> (<title>), <genres>, <release_date>, <runtime>, <spoken_languages>, <production_companies>, <poster_path>,
-    # <adult>, <overview>, <vote_average>
-
-    for i in info_movies:
-        info_tmp = []
-        if i.find('poster_path').text is not None:
-            poster_url = IMAGES_SITE + i.find('poster_path').text
-        else:
-            poster_url = NO_IMAGE
-
-        if i.find('runtime').text is not None:
-            runtime = i.find('runtime').text
-        else:
-            runtime = "Undefined"
-
-        if i.find('release_date').text is not None:
-            release_date = i.find('release_date').text
-        else:
-            release_date = "Undefined"
-
-        if i.find('genres//item') is not None and i.find('genres//item/name') is not None:
-            genres = ""
-            for item in i.find('genres'):
-                genres += "[" + item.find('name').text + "]"
-        else:
-            genres = "Undefined"
-
-        if i.find('overview').text is not None:
-            overview = i.find('overview').text
-        else:
-            overview = "Undefined"
-
-        info_tmp.append(i.find('original_title').text)
-        info_tmp.append(i.find('vote_average').text)
-        info_tmp.append(poster_url)
-        info_tmp.append(runtime)
-        info_tmp.append(release_date)
-        info_tmp.append(genres)
-        info_tmp.append(overview)
-
-        info_list.append(info_tmp)
-        print(info_list)
-
-    m_review = movie_review()
+   # m_review = movie_review()
 
     tparams = {
-        'html_review': m_review,
+        #'html_review': m_review,
         'result': info_list,
     }
 
