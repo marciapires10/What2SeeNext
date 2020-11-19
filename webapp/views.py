@@ -70,7 +70,7 @@ def get_top_rated_series():
         else:
             poster_url = NO_IMAGE
         if serie.find("id").text is not None:
-            serie_id = serie.find("id").text
+            serie_id = serie.find("id").text + ".s"
         else:
             serie_id = "Undefined"
 
@@ -262,23 +262,38 @@ def series(request , filter = None, order = None):
 
 def detail_info(request, id):
     # create query instance
-    query = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-fullinfo('" + id + "')"
+    print(id)
+    id_list = id.split(".")
+    print(len(id_list))
+    is_movie = True
+    if len(id_list) == 2:
+        is_movie = False
+        id = id_list[0]
+        query = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-fullserieinfo('" + id + "')"
+    else:
+        query = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-fullinfo('" + id + "')"
     result = session.query(query).execute()
-    #print(result)
+    print(id)
+    print(result)
     tree = etree.XML(result)
 
     info_list = []
     genres = ""
     cast_str = ""
     crew_str = ""
+    epi_season = ""
+    status = "Released"
+    cast_is_found = False
+    crew_is_found = False
     for item in tree:
         info_tmp = []
 
-        if item.tag == 'original_title':
+        if item.tag == 'original_title' or item.tag == 'original_name':
             if item.text is not None:
                 original_title = item.text
             else:
                 original_title = "Undefined"
+
         if item.tag == "poster_path":
             if item.text is not None:
                 poster_url = IMAGES_SITE + item.text
@@ -289,44 +304,81 @@ def detail_info(request, id):
                 vote_average = item.text
             else:
                 vote_average = "Undefined"
+        if item.tag == "status":
+            if item.text is not None:
+                status = item.text
+            else:
+                status = "Undefined"
         if item.tag == "runtime":
             if item.text is not None:
                 runtime = item.text
             else:
                 runtime = "Undefined"
-        if item.tag == "release_date":
+        if item.tag == "release_date" or item.tag == "first_air_date":
             if item.text is not None:
                 release_date = item.text
             else:
                 release_date = "Undefined"
         if item.tag == "genre":
-            if item.text is not None:
+            if item.find("name") is not None:
+                if item.find("name").text is not None:
+                    genres += "[" + item.find("name").text + "] "
+            elif item.text is not None:
                 genres += "[" + item.text + "] "
         if item.tag == "overview":
             if item.text is not None:
                 overview = item.text
             else:
                 overview = "Undefined"
+        if item.tag == "number_of_episodes":
+            if item.text is not None:
+                epi_season += item.text + " Episodes, "
+            else:
+                epi_season += "Undefined number of Seasons"
+        if item.tag == "number_of_seasons":
+            if item.text is not None:
+                epi_season += item.text + " Seasons"
+            else:
+                epi_season += "Undefined number of Seasons."
         if item.tag == "credit":
             count = 0
-            for cast in item.find("cast"):
-                if cast.find("character").text is not None and cast.find("original_name").text is not None:
-                    cast_str += cast.find("original_name").text + " (" + cast.find("character").text + ") ,"
-                    count += 1
-                if count >= 5:
-                    break
-            for crew in item.find("crew"):
-                if crew.tag == "original_name":
-                    if crew.text is not None:
-                        crew_str += crew.text
-                if crew.tag == "job":
-                    if crew.text is not None:
-                        crew_str += " (" + crew.text + ") ,"
+            if item.find("cast") is not None:
+                for cast in item.find("cast"):
+                    if cast.find("character").text is not None and cast.find("original_name").text is not None:
+                        if cast_is_found:
+                            cast_str +=", " + cast.find("original_name").text + " (" + cast.find("character").text + ")"
+                        else:
+                            cast_str += cast.find("original_name").text + " (" + cast.find("character").text + ")"
+                            cast_is_found = True
+                        count += 1
+                    if count >= 5:
+                        break
+            else:
+                cast_str = "Undefined."
+            if item.find("crew") is not None:
+                for crew in item.find("crew"):
+                    if crew.tag == "original_name":
+                        if crew.text is not None:
+                            if crew_is_found:
+                                crew_str += ", " + crew.text
+                            else:
+                                crew_str += crew.text
+                                crew_is_found = True
+                    if crew.tag == "job":
+                        if crew.text is not None:
+                            crew_str += " (" + crew.text + ")"
+            else:
+                crew_str = "Undefined"
 
+    info_tmp.append(str(is_movie))
     info_tmp.append(original_title)
     info_tmp.append(poster_url)
     info_tmp.append(vote_average)
-    info_tmp.append(runtime)
+    if is_movie:
+        info_tmp.append(runtime)
+    else:
+        info_tmp.append(epi_season)
+    info_tmp.append(status)
     info_tmp.append(release_date)
     info_tmp.append(genres)
     info_tmp.append(overview)
