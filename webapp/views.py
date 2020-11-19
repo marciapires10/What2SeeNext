@@ -5,7 +5,7 @@ from django.http import HttpResponse, HttpRequest, HttpResponseRedirect
 import requests
 import lxml.etree as ET
 from BaseXClient import BaseXClient
-from EDC_Project.settings import BASE_DIR
+from Project.settings import BASE_DIR
 import os
 
 MOVIES_NEWS = "https://www.cinemablend.com/rss/topic/news/movies"
@@ -31,7 +31,41 @@ QUERY_DELETE_REVIEW = "import module namespace funcs = \"com.funcs.catalog\";fun
 QUERY_DELETE_SREVIEW = "import module namespace funcs = \"com.funcs.catalog\";funcs:delete-sreview(\'{}\',\"{}\")"
 
 NO_IMAGE = "../static/assets/img/NoImage.jpg"
+CAST_XML = os.path.join(BASE_DIR, "webapp/files/casts.xml")
+CAST_XSD = os.path.join(BASE_DIR, "webapp/files/casts.xsd")
+MOVIES_XML = os.path.join(BASE_DIR, "webapp/files/movies.xml")
+MOVIES_XSD = os.path.join(BASE_DIR, "webapp/files/movies.xsd")
+REVIEWS_XML = os.path.join(BASE_DIR, "webapp/files/reviews.xml")
+REVIEWS_XSD = os.path.join(BASE_DIR, "webapp/files/reviews.xsd")
+SERIES_XML = os.path.join(BASE_DIR, "webapp/files/series.xml")
+SERIES_XSD = os.path.join(BASE_DIR, "webapp/files/series.xsd")
+SCREDITS_XML = os.path.join(BASE_DIR, "webapp/files/scredits.xml")
+SREVIEWS_XML = os.path.join(BASE_DIR, "webapp/files/sreviews.xml")
 
+def validate_schemas():
+    cast_schema = etree.XMLSchema(etree.parse(CAST_XSD))
+    movies_schema = etree.XMLSchema(etree.parse(MOVIES_XSD))
+    series_schema = etree.XMLSchema(etree.parse(SERIES_XSD))
+    reviews_schema = etree.XMLSchema(etree.parse(REVIEWS_XSD))
+
+    cast_xml = etree.parse(CAST_XML)
+    movies_xml = etree.parse(MOVIES_XML)
+    reviews_xml = etree.parse(REVIEWS_XML)
+    sreviews_xml = etree.parse(SREVIEWS_XML)
+    series_xml = etree.parse(SERIES_XML)
+    scredits_xml = etree.parse(SCREDITS_XML)
+
+    try:
+        print("All schemas validated successfully.")
+        cast_schema.assertValid(cast_xml)
+        cast_schema.assertValid(scredits_xml)
+        movies_schema.assertValid(movies_xml)
+        series_schema.assertValid(series_xml)
+        reviews_schema.assertValid(reviews_xml)
+        reviews_schema.assertValid(sreviews_xml)
+    except :
+        print("Schema not valid")
+        quit()
 
 def get_top_rated_movies():
     # create query instance
@@ -117,6 +151,7 @@ def get_rss():
 
 
 def index(request):
+    validate_schemas()
     top_movies = get_top_rated_movies()
     top_series = get_top_rated_series()
     news = get_rss()
@@ -144,6 +179,7 @@ def get_movie_genres():
     return mgenres
 
 def movies(request, filter = None, order = None):
+    validate_schemas()
     if 'info-m' in request.POST:
         id = request.POST.get('info-m')
         detail_info(request, id)
@@ -215,6 +251,7 @@ def get_series_genres():
 
 
 def series(request , filter = None, order = None):
+    validate_schemas()
     if 'search' in request.POST:
         search_str = request.POST.get('search', '')
         return HttpResponseRedirect('/search_results/' + search_str)
@@ -280,6 +317,7 @@ def series(request , filter = None, order = None):
     return render(request, 'series_list.html', tparams)
 
 def detail_info(request, id):
+    validate_schemas()
 
     if 'search' in request.POST:
         req = request.POST.get('search', '')
@@ -289,15 +327,12 @@ def detail_info(request, id):
     id_list = id.split(".")
     is_movie = True
     if len(id_list) == 2:
-        print("Movie")
         is_movie = False
         id = id_list[0]
         query = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-fullserieinfo('" + id + "')"
     else:
-        print("Serie")
         query = "import module namespace funcs = \"com.funcs.catalog\"; funcs:get-fullinfo('" + id + "')"
     result = session.query(query).execute()
-    print(result)
     tree = etree.XML(result)
 
     info_list = []
@@ -455,6 +490,8 @@ def get_review(id, is_movie):
     return html
 
 def get_search_results(request, str):
+    validate_schemas()
+
     if 'search' in request.POST:
         str = request.POST.get('search', '')
         return HttpResponseRedirect('/search_results/' + str)
@@ -465,7 +502,6 @@ def get_search_results(request, str):
             id = res_div[1]
         else:
             id = res_div[1] + ".s"
-        print(id)
         detail_info(request, id)
         return HttpResponseRedirect('/info/' + id)
     # create query instance
@@ -590,7 +626,11 @@ def get_movies_search(movies):
     return movies_list
 
 def full_news(request):
+    validate_schemas()
 
+    if 'search' in request.POST:
+        str = request.POST.get('search', '')
+        return HttpResponseRedirect('/search_results/' + str)
     full_news = get_rss()
 
     tparams = {

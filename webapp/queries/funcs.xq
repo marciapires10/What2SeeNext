@@ -54,14 +54,7 @@ declare function funcs:get-genre-movies($g) {
   <movies>{
   for $a in doc("movieDB/movies.xml")//movie
   where ((for $g_item in $g return $g_item = $a/genres/item/name) = true())
-  return (
-    <movie>{
-      $a/original_title,
-      $a/poster_path,
-      $a/popularity,
-      $a/vote_average
-    }</movie>
-  )
+  return $a
   }</movies>
 };
 
@@ -69,14 +62,7 @@ declare function funcs:get-genre-series($g) {
   <series>{
   for $a in doc("movieDB/series.xml")//serie
   where ((for $g_item in $g return $g_item = $a/genres/item/name) = true())
-  return (
-    <serie>{
-      $a/name,
-      $a/poster_path,
-      $a/popularity,
-      $a/vote_average
-    }</serie>
-  )
+  return $a
   }</series>
 };
 
