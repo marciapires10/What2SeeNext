@@ -48,16 +48,23 @@
                 <hr class="divider light my-4" />
             </div>
             <div class="col-lg-10" style="padding-top: 40px;">
-                <h3>Review this title</h3>
+                <h3 style="color: white">Review this title</h3>
                 <form role="form" method="POST" id="new-review">
-                    <textarea class="form-control" type="textarea" id="review-area"></textarea>
-                    <button type="submit">Post review</button>
+                    <input style="width: 200px;" class="form-control" type="text" id="review-area-author" placeholder="Insert your username" required="required">
+                    <p></p>
+                    <textarea style="height: 250px;" class="form-control" type="textarea" id="review-area-content" placeholder="Insert your review!" required="required"></textarea>
+                    <p></p>
+                    <button type="submit" class="btn btn-primary" style="background-color: #1b1d1f">Post review</button>
+                    <p></p>
                 </form>
-                <h3>See other reviews</h3>
+                <hr class="divider light my-4" />
+                <p></p>
+                <h3 style="color: white">See other reviews</h3>
+                <p></p>
                 <table>
                     <tr>
-                      <!--  {{ html_review | safe }} -->
-                     </tr>
+                        {{ html_review | safe }}
+                    </tr>
                 </table>
             </div>
         </div>

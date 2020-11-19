@@ -22,21 +22,24 @@
                                     {% endfor %}
 
                                 <td>
-                                    <input type="submit" id="submit" name="filter" value="Filter">
+                                    <input type="submit" id="submit" class="btn btn-primary" name="filter" value="Filter">
                                 </td>
 
                                 </tr>
                             </table>
                         <div class="dropdown" onclick="ShowGenre()">
-                            <button type="button" class="dropbtn">Order By<i class="fa fa-caret-down"> </i></>
+                            <button type="button" class="dropbtn">Order by <i class="fa fa-caret-down"> </i></button>
                             <div class="dropdown-content" id="dropgenre">
                                 <table>
                                     <tr>
                                         <input type="submit" id="Average" name="order" value="Average"/>
+                                    </tr>
+                                    <tr>
                                         <input type="submit" id="Popularity" name="order" value="Popularity"/>
+                                    </tr>
+                                    <tr>
                                         <input type="submit" id="Title" name="order" value="Alphabetic"/>
                                     </tr>
-
                                 </table>
                             </div>
                         </div>

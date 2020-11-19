@@ -471,3 +471,13 @@ def get_movies_search(movies):
         movies_list.append(movie_temp)
 
     return movies_list
+
+def full_news(request):
+
+    full_news = get_rss()
+
+    tparams = {
+        'full_news': full_news,
+    }
+
+    return render(request, 'news.html', tparams)
